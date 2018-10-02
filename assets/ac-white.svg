@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="48px" height="41px" viewBox="0 0 48 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
-    <title>air-conditioner</title>
+    <title>ac-white</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Events" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Assets" transform="translate(-46.000000, -245.000000)">
-            <g id="Icon" transform="translate(44.000000, 239.000000)">
+        <g id="Assets" transform="translate(-791.000000, -245.000000)">
+            <rect id="Rectangle" fill="#333333" x="720" y="-6" width="748" height="1210"></rect>
+            <g id="Icon" transform="translate(789.000000, 239.000000)">
                 <circle id="Oval" fill-opacity="0" fill="#D8D8D8" cx="26" cy="26" r="26"></circle>
-                <g id="air-conditioner" transform="translate(2.000000, 6.000000)" fill="#333333" fill-rule="nonzero">
+                <g id="air-conditioner" transform="translate(2.000000, 6.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <path d="M36,13.0624687 C36,12.5097188 35.5527188,12.0624375 34.9999688,12.0624375 L4.99996875,12.0624375 C4.44721875,12.0624375 3.9999375,12.5097187 3.9999375,13.0624687 L3.9999375,17.0625 C3.9999375,17.61525 4.44721875,18.0625312 4.99996875,18.0625312 L34.9999688,18.0625312 C35.5527188,18.0625312 36,17.61525 36,17.0625 L36,13.0624687 Z M34.0000312,16.0624688 L6,16.0624688 L6,14.0625 L34.0000312,14.0625 L34.0000312,16.0624688 Z" id="Shape"></path>
                     <path d="M4.99996875,8.0625 L27,8.0625 C27.55275,8.0625 28.0000313,7.61521875 28.0000313,7.06246875 C28.0000313,6.50971875 27.55275,6.0624375 27,6.0624375 L4.99996875,6.0624375 C4.44721875,6.0624375 3.9999375,6.50971875 3.9999375,7.06246875 C4.00003125,7.61521875 4.4473125,8.0625 4.99996875,8.0625 Z" id="Shape"></path>
                     <circle id="Oval" cx="34.0000312" cy="6.06253125" r="1.99996875"></circle>
