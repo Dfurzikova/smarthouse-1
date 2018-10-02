@@ -1,3 +1,72 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    font-family: Arial-BoldMT;
+    /* display: flex;
+    flex-direction: column; */
+    min-height: 100vh;
+  }
+  .header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 92px;
+}
+
+.header__menu {
+  margin-left: 38px;
+}
+
+.header__logo {
+  margin-left: 40px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.menu__item {
+  font-size: 16px;
+  line-height: 20px;
+  opacity: 0.6;
+  margin: 0 14px 0 14px;
+}
+.menu__item_link {
+  text-decoration: none;
+  color: #333333;
+}
+
+.menu__item-active {
+  opacity: 1;
+}
+
+.adaptive-icon-list {
+  background-image: url('assets/icon_list_m.png');
+  background-image: -webkit-image-set(
+    url('assets/icon_list_m.png') 1x,
+    url('assets/icon_list_m@2x.png') 2x
+  );
+  background-repeat: no-repeat;
+  display: none;
+  width: 14px;
+  height: 16px;
+  position: relative;
+  cursor: pointer;
+}
+
+.divide-line {
+  width: 100%;
+  height: 1px;
+  background-color: #f0f0f0;
+  display: inline-block;
+}
+.content__title{
+    font-size: 36px;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(6, 165px);
