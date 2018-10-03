@@ -12,44 +12,129 @@
 
 <body>
     <div class="page">
-            <nav class="header">
-                    <img class="header__logo" src="assets/ya-dom-1x.png" srcset="assets/ya-dom-2x.png 2x" />
-        
-                    <div class="adaptive-icon-list"> </div>
-        
-                    <div>
-                        <ul class="menu header__menu">
-                            <li class="menu__item menu__item-active">
-                                <a class="menu__item_link" href="#">Сводка</a>
-                            </li>
-                            <li class="menu__item">
-                                <a class="menu__item_link" href="#">Устройства</a>
-                            </li>
-                            <li class="menu__item">
-                                <a class="menu__item_link" href="#">Сценарии</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <span class="divide-line"></span>
+        <nav class="header">
+            <img class="header__logo" src="assets/ya-dom-1x.png" srcset="assets/ya-dom-2x.png 2x" />
+            <div class="adaptive-icon-list"> </div>
+
+            <div>
+                <ul class="menu header__menu">
+                    <li class="menu__item menu__item-active">
+                        <a class="menu__item_link" href="#">События</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__item_link" href="#">Сводка</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__item_link" href="#">Устройства</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__item_link" href="#">Сценарии</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <span class="divide-line"></span>
 
         <div class="content">
             <h1 class="content__title">Лента событий</h1>
             <div class="container">
-                <div class="item  item_l">L</div>
-                <div class="item  item_s">S</div>
-                <div class="item  item_s">S</div>
-                <div class="item  item_s">S</div>
-                <div class="item  item_m">M</div>
-                <div class="item  item_m">M</div>
-                <div class="item  item_m">M</div>
-                <div class="item  item_m">M</div>
-                <div class="item  item_s">S</div>
-                <div class="item  item_l">L</div>
-                <div class="item  item_s">S</div>
+
+                <div class="card-item  item_size_l">
+                    <div class="icon icon-close"></div>
+                    <div class="icon icon-next"></div>
+                    <div class="card-item__event">
+                        <img class="card_icon" src="assets/line-chart.svg" />
+                        <h1 class="card-item__title">Еженедельный отчет по расходам ресурсов</h1>
+                    </div>
+                    <div class="card-item__subtitle card-item__subtitle_l">
+                        <div class="subtitle-source">Сенсоры потребления</div>
+                        <div class="subtitle-date">19.00, Сегодня</div>
+                    </div>
+                    <div class="card-item__description_l">Так держать! За последнюю неделю вы потратили на 10% меньше ресурсов, чем неделей ранее.</div>
+                    <img class="card-item__image" src="assets/Richdata.svg" />
+                </div>
+
+
+                <div class="card-item  item_size_s">
+                    <div class="icon icon-close"></div>
+                    <div class="icon icon-next"></div>
+                    <div class="card-item__event">
+                        <img class="card_icon" src="assets/key.svg" />
+                        <h1 class="card-item__title">Дверь открыта</h1>
+                    </div>
+                    <div class="card-item__subtitle card-item__subtitle_s">
+                        <div class="subtitle-source">Сенсор входной двери</div>
+                        <div class="subtitle-date">18:50, Сегодня</div>
+                    </div>
+                </div>
+
+                <div class="card-item  item_size_s">
+                    <div class="card-item__event">
+                        <img class="card_icon" src="assets/robot-cleaner.svg" />
+                        <h1 class="card-item__title">Уборка закончена</h1>
+                    </div>
+                    <div class="card-item__subtitle card-item__subtitle_s">
+                        <div class="subtitle-source">Пылесос</div>
+                        <div class="subtitle-date">18:45, Сегодня</div>
+                    </div>
+                </div>
+
+                <div class="card-item  item_size_s">
+                    <div class="card-item__event">
+                        <img class="card_icon" src="assets/router.svg" />
+                        <h1 class="card-item__title">Новый пользователь</h1>
+                    </div>
+                    <div class="card-item__subtitle card-item__subtitle_s">
+                        <div class="subtitle-source">Роутер</div>
+                        <div class="subtitle-date">18:50, Сегодня</div>
+                    </div>
+                </div>
+
+                <div class="card-item item_size_m">M</div>
+                <div class="card-item item_size_m">M</div>
+                <div class="card-item item_size_m">M</div>
+                <div class="card-item item_size_m">M</div>
+
+                <div class="card-item  item_size_s">
+                    <div class="card-item__event">
+                        <img class="card_icon" src="assets/router.svg" />
+                        <h1 class="card-item__title">Зарядка завершена</h1>
+                    </div>
+                    <div class="card-item__subtitle card-item__subtitle_s">
+                        <div class="subtitle-source">Оконный сенсор</div>
+                        <div class="subtitle-date">18:50, Сегодня</div>
+                    </div>
+                    <div class="card-item__description card-item__description_s">Ура! Устройство «Оконный сенсор» снова в строю!</div>
+                </div>
+
+
+                <div class="card-item item_size_l">L</div>
+
+
+                <div class="card-item  item_size_s">
+                    <div class="card-item__event">
+                        <img class="card_icon" src="assets/kettle.svg" />
+                        <h1 class="card-item__title">Вода вскипела</h1>
+                    </div>
+                    <div class="card-item__subtitle card-item__subtitle_s">
+                        <div class="subtitle-source">Чайник</div>
+                        <div class="subtitle-date">18:50, Сегодня</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="footer"></div>
+        <span class="divide-line"></span>
+        <div class="footer">
+            <div class="footer__items">
+                <a class="footer__items_link" href="#">Помощь</a>
+                <a class="footer__items_link" href="#">Обратная связь </a>
+                <a class="footer__items_link" href="#">Разработчикам</a>
+                <a class="footer__items_link" href="#">Условия использования</a>
+            </div>
+
+            <div class="footer__copyright">© 2001–2017 ООО «Яндекс»</div>
+
+        </div>
     </div>
 </body>
 
