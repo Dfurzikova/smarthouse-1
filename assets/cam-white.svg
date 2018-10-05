@@ -6,7 +6,7 @@
     <defs></defs>
     <g id="Events" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Assets" transform="translate(-891.000000, -247.000000)">
-            <rect id="Rectangle" fill="#333333" x="720" y="-6" width="748" height="1210"></rect>
+            <rect id="Rectangle"  x="720" y="-6" width="748" height="1210"></rect>
             <g id="Icon" transform="translate(889.000000, 239.000000)">
                 <circle id="Oval" fill-opacity="0" fill="#D8D8D8" cx="26" cy="26" r="26"></circle>
                 <g id="002-cctv" transform="translate(2.000000, 8.000000)" fill="#FFFFFF" fill-rule="nonzero">
