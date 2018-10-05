@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-size: 20px;
+    font-size: 1.25em;
     font-family: ArialMT, Arial;
     display: flex;
     flex-direction: column;
@@ -32,7 +32,7 @@ body {
 }
 
 .menu__item {
-    font-size: 16px;
+    font-size: 0.800em;
     line-height: 20px;
     opacity: 0.6;
     margin: 0 14px 0 14px;
@@ -65,7 +65,7 @@ body {
 }
 
 .page-content__title {
-    font-size: 36px;
+    font-size: 1.800em;
     margin-top: 35px;
 }
 
@@ -172,7 +172,7 @@ body {
 }
 
 .card-item__title {
-    font-size: 24px;
+    font-size: 1.200em;
     display: -webkit-box;
     margin: 0;
     text-overflow: ellipsis;
@@ -195,7 +195,7 @@ body {
 
 .item_size_s .card-item__subtitle {
     margin-top: 15px;
-    font-size: 18px;
+    font-size: 0.900em;
 }
 
 .item_size_m .card-item__subtitle,
@@ -203,7 +203,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-    font-size: 18px;
+    font-size: 0.900em;
 }
 .item_size_l .card-item__subtitle {
     margin-top: 30px;
@@ -221,7 +221,7 @@ body {
 .item_size_l .card-item__description {
     flex-grow: 1;
     flex-shrink: 0;
-    font-size: 24px;
+    font-size: 1.200em;
 }
 
 .card-item__image {
@@ -265,7 +265,7 @@ body {
 
 .indicator-temp,
 .indicator-humidity {
-    font-size: 18px;
+    font-size: 0.900em;
 }
 
 .temperature,
@@ -360,7 +360,7 @@ body {
 .song-info__song-duration,
 .player__volume-rate {
     font-family: Helvetica;
-    font-size: 14px;
+    font-size: 0.700em;
     color: gray;
     right: 20px;
     position: absolute;
@@ -409,7 +409,7 @@ body {
 .footer__item_link {
     text-decoration: none;
     color: #333333;
-    font-size: 12px;
+    font-size: 0.600em;
     color: #858585;
     letter-spacing: 0.01px;
     text-align: left;
@@ -417,7 +417,7 @@ body {
 }
 
 .footer__copyright {
-    font-size: 12px;
+    font-size: 0.600em;
     color: #858585;
     letter-spacing: 0.01px;
     text-align: left;
