@@ -2,11 +2,13 @@ body {
     margin: 0;
     padding: 0;
     font-size: 1.25em;
+    color: #333333;
     font-family: ArialMT, Arial;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
+
 .page {
     display: flex;
     flex-direction: column;
@@ -65,6 +67,7 @@ body {
 .page-content {
     margin: 0 auto;
     flex: 1 0 auto;
+    margin-bottom: 79px;
 }
 
 .page-content__title {
@@ -110,6 +113,7 @@ body {
     height: 100%;
     margin-top: 10px;
 }
+
 .card-item__content:hover {
     background-color: #f3f3f3;
 }
@@ -134,6 +138,7 @@ body {
     height: 14px;
     position: absolute;
 }
+
 .icon_type_close, .icon_type_next {
     right: 25px;
     display: none;
@@ -186,6 +191,7 @@ body {
 
 .item_size_s .card-item__event {
     margin-top: 3px;
+    height: 50px;
 }
 
 .item_size_s .card-item__header {
@@ -208,6 +214,7 @@ body {
     margin-top: 20px;
     font-size: 0.900em;
 }
+
 .item_size_l .card-item__subtitle {
     margin-top: 30px;
 }
@@ -221,6 +228,7 @@ body {
     flex-grow: 1;
     flex-shrink: 0;
 }
+
 .item_size_l .card-item__description {
     flex-grow: 1;
     flex-shrink: 0;
@@ -275,7 +283,9 @@ body {
 .humidity {
     font-family: Arial-BoldMT;
 }
-
+.card-item_cam-info {
+    display: none;
+}
 .card-item__music-player {
     margin-top: 23px;
 }
@@ -370,8 +380,7 @@ body {
 }
 
 .card-item__action-request-buttons {
-    position: absolute;
-    bottom: 20px;
+    margin-top: 30px;
 }
 
 .card-item-button {
@@ -429,35 +438,39 @@ body {
 
 }
 @media screen and (max-width: 1030px) {
+
     .page-content-container {
         grid-template-columns: repeat(6, 140px);
     }
 }
 @media screen and (max-width: 1023px) {
-    body {
-        background-color: #ac0;
-    }
+
     .page-content-container {
-        display: grid;
-        grid-template-columns: repeat(4, 154px);
-        grid-auto-rows: auto;
+        /* display: grid; */
+        grid-template-columns: repeat(4, 140px);
+        /* grid-auto-rows: auto;
         grid-gap: 20px;
-        grid-auto-flow: dense;
+        grid-auto-flow: dense; */
     }
+
     .item_size_m {
         grid-column: span 4;
     }
+
     .item_size_s {
         grid-column: span 4;
     }
+
     .card-item__subtitle {
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
     }
+
     .item_size_s .subtitle-date {
         margin: 0;
     }
+
     .card-item:hover .icon_type_close {
         display: none;
     }
@@ -465,4 +478,121 @@ body {
     .card-item:hover .icon_type_next {
         display: none;
     }
+}
+@media screen and (max-width: 768px) {
+
+    body {
+        font-size: 1.125em;
+    }
+
+    .header {
+        border-bottom: none;
+    }
+    .header__logo {
+        margin-left: 20px;
+      }
+
+    .adaptive-icon-list {
+        display: inline-block;
+        position: absolute;
+        right: 0px;
+        margin-right: 20px;
+    }
+
+    .menu {
+        display: none;
+    }
+    
+    .page-content-container {
+        /* display: grid; */
+        grid-template-columns: repeat(4, 120px);
+        /* grid-auto-rows: auto;
+        grid-gap: 20px;
+        grid-auto-flow: dense; */
+        /* margin-bottom: 40px; */
+    }
+
+    .page-content__title {
+        margin-top: 0;
+    }
+
+    .card-item_cam-info {
+        display: flex;
+        font-size: 0.750em;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .footer {
+        display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+
+    .page-content-container {
+        grid-template-columns: repeat(4, 80px);
+    }
+
+}
+@media screen and (max-width: 375px) {
+    body {
+        background-color: #fc0;
+        font-size: 1em;
+    }
+
+    .header {
+        height: 70px;
+    }
+
+    .page-content__title {
+        font-size: 1.5em;
+    }
+
+    .page-content-container {
+        grid-template-columns: repeat(4, 69px);
+    }
+
+    .card-item__icon {
+        width: 35px;
+    }
+
+    .card-item__title {
+        font-size: 0.875em;
+    }
+
+    .item_size_l .card-item__subtitle {
+        font-size: 0.750em;
+        margin-top: 15px;
+    }
+
+    .item_size_m .card-item__subtitle {
+        font-size: 0.750em;
+    }
+
+    .item_size_s .card-item__subtitle {
+        font-size: 0.750em;
+    }
+
+    .item_size_l .card-item__description {
+        margin-top: 10px;
+    }
+
+    .button_position {
+        margin-right: 0;
+    }
+
+    .card-item__action-request-buttons, .card-item__indicators {
+        display: flex;
+        justify-content: space-between;
+    }
+   
+    .song-info__title {
+        display: -webkit-box;
+        margin: 0;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+   
 }
