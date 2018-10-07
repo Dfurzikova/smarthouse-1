@@ -55,10 +55,10 @@ var page = {
 
         var content = template.content.cloneNode(true);
         var domNode = content.querySelector('*');
-        var dataTmpl = domNode.querySelectorAll('*[data-tmpl]');
+        var dataTmpl = domNode.querySelectorAll('*[data-field]');
 
         dataTmpl.forEach(function (d) {
-            var dataField = d.dataset.tmpl;
+            var dataField = d.dataset.field;
             d.innerHTML = data[dataField];
             //  console.log(d);
         })
@@ -71,7 +71,7 @@ var page = {
             if (newNode) {
                 node.parentNode.replaceChild(newNode, node);
             } else {
-                node.parentNode.removeChild(node);
+                node.remove();
             }
         }.bind(this));
 
@@ -82,13 +82,19 @@ var page = {
 
     'template_card-item': function (domNode, data) {
         var icon = domNode.querySelector('.card-item__icon');
+        var description = domNode.querySelector('.card-item__description');
 
         domNode.classList.add(
             'card-item_size_' + data.size,
             'card-item_type_' + data.type
         );
+
         icon.src = 'assets/' + data.icon + '.svg'
 
+        if (!data.description && description) {
+            description.remove();
+        }
+        
         return domNode;
     },
 
@@ -116,6 +122,29 @@ var page = {
 
 
         return domNode;
+    },
+
+    'template_fridge': function(domNode, data){
+       
+        var buttons = domNode.querySelectorAll('.card-item-button');
+       
+        for (var i = 0; i < buttons.length; i++){
+            buttons[i].innerHTML = data.buttons[i]
+        }
+       domNode.querySelectorAll('.card-item-button')[0].classList.add('button_active');;
+
+        return domNode;
+    },
+
+    'template_cam': function(domNode, data){
+        
+        return domNode;
+    },
+
+    'template_stats': function(domNode, data){
+        
+        return domNode;
+
     }
 
 
