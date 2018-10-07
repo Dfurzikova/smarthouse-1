@@ -19,7 +19,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     height: 92px;
-    font-family: Arial-BoldMT;
+    font-family: Arial-BoldMT, Arial; 
     border-bottom: 1px solid #f0f0f0;
 }
 
@@ -289,7 +289,7 @@ body {
 
 .temperature,
 .humidity {
-    font-family: Arial-BoldMT;
+    font-family: Arial-BoldMT, Arial;
 }
 .card-item_cam-info {
     display: none;
@@ -397,7 +397,7 @@ body {
     border-radius: 8px;
     width: 132px;
     height: 54px;
-    font-family: Arial-BoldMT;
+    font-family: Arial-BoldMT, Arial;
     color: #000000;
     background-color: #e5e5e5;
 }
