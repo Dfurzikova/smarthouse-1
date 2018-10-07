@@ -112,6 +112,11 @@ body {
     height: 100%;
     margin-top: 10px;
 }
+
+.card-item__content:empty {
+    display: none;
+}
+
 .card-item_type_critical .card-item__content {
     background: #fafafa;
 }
