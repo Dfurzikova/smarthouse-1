@@ -291,9 +291,11 @@ body {
 .humidity {
     font-family: Arial-BoldMT, Arial;
 }
+
 .card-item_cam-info {
     display: none;
 }
+
 .card-item__music-player {
     margin-top: 23px;
 }
@@ -456,11 +458,7 @@ body {
 @media screen and (max-width: 1023px) {
 
     .page-content-container {
-        /* display: grid; */
         grid-template-columns: repeat(4, 140px);
-        /* grid-auto-rows: auto;
-        grid-gap: 20px;
-        grid-auto-flow: dense; */
     }
 
     .card-item_size_m {
@@ -514,12 +512,7 @@ body {
     }
     
     .page-content-container {
-        /* display: grid; */
         grid-template-columns: repeat(4, 120px);
-        /* grid-auto-rows: auto;
-        grid-gap: 20px;
-        grid-auto-flow: dense; */
-        /* margin-bottom: 40px; */
     }
 
     .page-content__title {
@@ -545,8 +538,8 @@ body {
 
 }
 @media screen and (max-width: 375px) {
+
     body {
-        background-color: #fc0;
         font-size: 1em;
     }
 
@@ -591,7 +584,8 @@ body {
         margin-right: 0;
     }
 
-    .card-item__action-request-buttons, .card-item__indicators {
+    .card-item__action-request-buttons,
+    .card-item__indicators {
         display: flex;
         justify-content: space-between;
     }
