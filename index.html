@@ -57,7 +57,7 @@
                         <div class="card-item__content">
                             <div class="card-item__description" data-tmpl="description"></div>
                             <div data-template="fillContent"></div>
-                            
+
 
                             <div class="icon icon_type_next"></div>
                         </div>
@@ -73,6 +73,27 @@
                         </div>
                         <div class="indicator-humidity">Влажность:
                             <span class="humidity"> </span>
+                        </div>
+                    </div>
+                </template>
+
+                <template id="music">
+                    <div class="card-item__music-player music-player">
+                        <div class="music-player__song-info">
+                            <img class="image song-info__album-cover" src="assets/album-cover.png" />
+                            <div class="song-info__title song_name">  </div>
+                            <div class="song-info__title">
+                                <input class="input duration-input song-info__duration-input" type="range" value="10"
+                                    min="0" max="100" step="10" />
+                                <div class="song-info__song-duration"></div>
+                            </div>
+                        </div>
+                        <div class="music-player__controls">
+                            <img class="image button  player__button_left" src="assets/Prev.svg" />
+                            <img class="image button player__button_right" src="assets/Prev.svg" style="transform: scale(-1, 1);" />
+                            <input class="input volume-control player__volume-control" type="range" value="10" min="0"
+                                max="100" step="10" />
+                            <div class="player__volume-rate"></div>
                         </div>
                     </div>
 

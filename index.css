@@ -302,6 +302,8 @@ body {
 .song-info__album-cover {
     grid-column: span 1;
     grid-row: span 2;
+    height: 52px; 
+    border-radius: 10px;
 }
 
 .song-info__title {

@@ -36,7 +36,7 @@ var page = {
             return;
         }
 
-        events.forEach(function(event){
+        events.forEach(function (event) {
             var container = document.querySelector('.page-content-container');
             var domNode = _this.fillTemplate('card-item', event);
 
@@ -56,16 +56,16 @@ var page = {
         var content = template.content.cloneNode(true);
         var domNode = content.querySelector('*');
         var dataTmpl = domNode.querySelectorAll('*[data-tmpl]');
-        
+
         dataTmpl.forEach(function (d) {
             var dataField = d.dataset.tmpl;
             d.innerHTML = data[dataField];
-          //  console.log(d);
+            //  console.log(d);
         })
 
         var dataTemplate = domNode.querySelectorAll('*[data-template]');
 
-        dataTemplate.forEach(function(node){
+        dataTemplate.forEach(function (node) {
             var newNode = this.fillTemplate(data.icon, data.data);
 
             if (newNode) {
@@ -79,27 +79,42 @@ var page = {
             return this['template_' + name](domNode, data);
         }
     },
-    
-    'template_card-item': function(domNode, data) {
+
+    'template_card-item': function (domNode, data) {
         var icon = domNode.querySelector('.card-item__icon');
-       
+
         domNode.classList.add(
             'card-item_size_' + data.size,
             'card-item_type_' + data.type
-            );
+        );
         icon.src = 'assets/' + data.icon + '.svg'
 
         return domNode;
     },
 
-    'template_thermal': function(domNode, data) {
-       // console.log(domNode);
-        console.log (data, 'data');
-        //console.log (data.data.temrature, 'data.data.teerature' )
+    'template_thermal': function (domNode, data) {
+
         var temp = domNode.querySelector('.temperature');
         var humidity = domNode.querySelector('.humidity');
+
         temp.innerHTML = data.temperature + ' C';
         humidity.innerHTML = data.humidity + ' %';
+
+        return domNode;
+    },
+
+    'template_music': function (domNode, data) {
+        var albumcover = domNode.querySelector('.song-info__album-cover');
+        var songname = domNode.querySelector('.song_name');
+         var duration = domNode.querySelector('.song-info__song-duration');
+         var volume = domNode.querySelector('.player__volume-rate');
+
+        albumcover.src = data.albumcover;
+        songname.innerHTML = data.artist + '-' + data.track.name;
+        duration.innerHTML = data.track.length;
+        volume.innerHTML = data.volume + '%';
+
+
         return domNode;
     }
 
