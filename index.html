@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
     <script src="index.js"></script>
 </head>
 
@@ -54,10 +55,16 @@
                                 <div class="subtitle-date" data-field="time"></div>
                             </div>
                         </div>
-                        <div class="card-item__content"><!-- 
-                             --><div class="card-item__description" data-field="description"></div><!-- 
-                             --><div data-template="fillContent"></div><!-- 
-                        --></div>
+                        <div class="card-item__content">
+                            <!-- 
+                             -->
+                            <div class="card-item__description" data-field="description"></div>
+                            <!-- 
+                             -->
+                            <div data-template="fillContent"></div>
+                            <!-- 
+                        -->
+                        </div>
 
                         <!-- Из за пробелов, в карточках без description у меня получалось лишнее пространство, как починить иначе пока не придумала -->
 
@@ -111,7 +118,21 @@
 
                 <!-- cam -->
                 <template id="cam">
-                    <img class="image card-item__image" src="assets/Bitmap.jpg" srcset="assets/Bitmap@2x.jpg 2x, assets/Bitmap@3x.jpg 3x " />
+                    <div class="cam-container">
+                        <img class="image cam-image card-item__image" src="assets/Bitmap.jpg" srcset="assets/Bitmap@2x.jpg 2x, assets/Bitmap@3x.jpg 3x " />
+                        <div class="card-item_cam-info">
+                            <div class="indicator-approximation">Приближение:
+                                <span class="approximation">78% </span>
+                            </div>
+                            <div class="indicator-brightness">Яркость:
+                                <span class="brightness">80% </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </template>
 
                 <!-- stats -->
