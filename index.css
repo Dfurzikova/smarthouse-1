@@ -291,6 +291,27 @@ body {
 .humidity {
     font-family: Arial-BoldMT, Arial;
 }
+.cam-image {
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+
+    position: absolute;
+    top:0;
+    /* left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: 20px;
+    margin-right: 20px; */
+    overflow: hidden;
+    background-repeat: repeat;
+}
+
+.cam-container {
+    position: relative;
+    min-height: 345px;
+}
 
 .card-item_cam-info {
     display: none;
@@ -524,6 +545,9 @@ body {
         font-size: 0.750em;
         justify-content: space-between;
         margin-top: 10px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 
     .footer {
@@ -597,6 +621,9 @@ body {
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
+    }
+    .cam-container {
+        min-height: 203px;
     }
    
 }
