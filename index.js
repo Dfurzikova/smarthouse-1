@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var page = {
     init: function () {
         this.getDataEvents();
+        this.bindEvents();
     },
 
     getDataEvents: function () {
@@ -137,7 +138,9 @@ var page = {
     },
 
     'template_cam': function(domNode, data){
-        
+        console.log(domNode);
+        domNode.setAttribute('touch-action', 'none');
+       
         return domNode;
     },
 
@@ -145,9 +148,48 @@ var page = {
         
         return domNode;
 
+    },
+
+    bindEvents: function(){
+        var image = document.querySelector('.cam-image');
+        image.addEventListener('pointerdown', this.onPointerDown.bind(this, image));
+        image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
+    },
+
+    onPointerDown: function(image, e){
+        image.setPointerCapture(e.pointerId);
+        console.log(e.type);
+       
+        this.coordinates = {
+            startX: e.x,
+            startPosition: 0
+        }
+        
+    },
+    onPointerMove: function(image, e){
+        if (!this.coordinates) {
+            return
+        }
+
+        var newX = e.x - this.coordinates.startX;
+
+        console.log(this.coordinates.startX, 'откуда начали');
+        
+
+        image.style.left = newX + 'px';
+
+        image.style.transition = 'left ease .5s';
+
+        image.addEventListener('pointerup', function(e){
+            this.coordinates = null;
+            console.log(e.type)
+
+        });
+        image.addEventListener('pointercancel', function(e){
+            this.coordinates = null;
+            console.log(e.type)
+            
+        });
     }
-
-
-
-
 }
+
