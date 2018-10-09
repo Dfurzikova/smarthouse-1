@@ -152,9 +152,18 @@ var page = {
 };
 
 var events = {
-    
+
     init: function () {
-        this.bindEvents();
+        
+        var isTouchCapable = 'ontouchstart' in window ||
+        window.DocumentTouch && document instanceof window.DocumentTouch ||
+        navigator.maxTouchPoints > 0 ||
+        window.navigator.msMaxTouchPoints > 0;
+        
+        if (isTouchCapable) {
+            this.bindEvents();
+        }
+       
     },
 
     bindEvents: function () {
@@ -162,6 +171,8 @@ var events = {
         image.addEventListener('pointerdown', this.onPointerDown.bind(this, image));
         image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
         image.addEventListener('pointerup', this.onPointerUp.bind(this, image));
+
+       
     },
 
     onPointerDown: function (image, event) {
