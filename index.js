@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     page.init();
+    events.init();
 });
 
 var page = {
     init: function () {
         this.getDataEvents();
-        this.bindEvents();
     },
 
     getDataEvents: function () {
@@ -95,7 +95,7 @@ var page = {
         if (!data.description && description) {
             description.remove();
         }
-        
+
         return domNode;
     },
 
@@ -113,8 +113,8 @@ var page = {
     'template_music': function (domNode, data) {
         var albumcover = domNode.querySelector('.song-info__album-cover');
         var songname = domNode.querySelector('.song_name');
-         var duration = domNode.querySelector('.song-info__song-duration');
-         var volume = domNode.querySelector('.player__volume-rate');
+        var duration = domNode.querySelector('.song-info__song-duration');
+        var volume = domNode.querySelector('.player__volume-rate');
 
         albumcover.src = data.albumcover;
         songname.innerHTML = data.artist + '-' + data.track.name;
@@ -125,71 +125,152 @@ var page = {
         return domNode;
     },
 
-    'template_fridge': function(domNode, data){
-       
+    'template_fridge': function (domNode, data) {
+
         var buttons = domNode.querySelectorAll('.card-item-button');
-       
-        for (var i = 0; i < buttons.length; i++){
+
+        for (var i = 0; i < buttons.length; i++) {
             buttons[i].innerHTML = data.buttons[i]
         }
-       domNode.querySelectorAll('.card-item-button')[0].classList.add('button_active');;
+        domNode.querySelectorAll('.card-item-button')[0].classList.add('button_active');;
 
         return domNode;
     },
 
-    'template_cam': function(domNode, data){
-        console.log(domNode);
+    'template_cam': function (domNode, data) {
+
         domNode.setAttribute('touch-action', 'none');
-       
+
         return domNode;
     },
 
-    'template_stats': function(domNode, data){
-        
+    'template_stats': function (domNode, data) {
+
         return domNode;
 
+    }
+};
+
+var events = {
+    
+    init: function () {
+        this.bindEvents();
     },
 
-    bindEvents: function(){
+    bindEvents: function () {
         var image = document.querySelector('.cam-image');
         image.addEventListener('pointerdown', this.onPointerDown.bind(this, image));
         image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
+        image.addEventListener('pointerup', this.onPointerUp.bind(this, image));
     },
 
-    onPointerDown: function(image, e){
-        image.setPointerCapture(e.pointerId);
-        console.log(e.type);
-       
-        this.coordinates = {
-            startX: e.x,
-            startPosition: 0
+    onPointerDown: function (image, event) {
+        event.preventDefault();
+        image.setPointerCapture(event.pointerId);
+        this.scaling = false;
+
+        this.currentImageX = this.currentImageX || 0;
+        this.currentStartX = event.x;
+        this.currentStartY = event.y
+
+        this.pointerArr = this.pointerArr || [];
+
+        this.pointerArr.push(event);
+        this.pointerArr = this.pointerArr.slice(-2)
+
+
+        if (this.pointerArr.length === 2) {
+
+            this.startDistance = this.getDistance(this.pointerArr[0], this.pointerArr[1]);
+            this.scaling = true;
+
+        } else {
+
+            this.scaling = false
+
         }
-        
     },
-    onPointerMove: function(image, e){
-        if (!this.coordinates) {
+
+    getDistance: function (finger1, finger2) {
+        return (Math.sqrt(Math.pow((finger1.clientX - finger2.clientX), 2) + Math.pow((finger1.clientY - finger2.clientY), 2)))
+    },
+
+    onPointerMove: function (image, event) {
+
+        event.preventDefault();
+        this.directionX(image);
+
+    },
+
+    directionX: function (image) {
+
+        if (!this.currentStartX) {
             return
         }
 
-        var newX = e.x - this.coordinates.startX;
+        if (this.pointerArr.length === 2) {
+            this.pinchZoom(image, event);
+            return
+        }
 
-        console.log(this.coordinates.startX, 'откуда начали');
-        
+        this.currentPointerX = event.x - this.currentStartX;
 
-        image.style.left = newX + 'px';
+        image.style.backgroundPosition = (this.currentImageX + this.currentPointerX) + 'px';
 
-        image.style.transition = 'left ease .5s';
 
-        image.addEventListener('pointerup', function(e){
-            this.coordinates = null;
-            console.log(e.type)
+    },
 
-        });
-        image.addEventListener('pointercancel', function(e){
-            this.coordinates = null;
-            console.log(e.type)
+    pinchZoom: function (image) {
+
+        this.scale_factor = 1;
+        this.curr_scale = 1.0;
+        var transformation;
+
+        for (var i = 0; i < this.pointerArr.length; i++) {
+            if (event.pointerId === this.pointerArr[i].pointerId) {
+                this.pointerArr[i] = event;
+                break;
+            }
+        }
+
+        if (this.scaling) {
+            this.currentDistance = this.getDistance(this.pointerArr[0], this.pointerArr[1]);
+
+            if (this.startDistance > 0) {
+
+
+                if (this.currentDistance > this.startDistance) {
+                    
+                    this.scale_factor += 0.05;
+                    console.log("Zoom увеличение");
+                    transformation = "scale(2, 2)";
+
+                    image.style.webkitTransform = transformation;
+                    image.style.transform = transformation
+                }
+
+                if (this.currentDistance < this.startDistance) {
+                    this.scale_factor -= 0.05;
+                    //transformation = "scale(" + this.scale_factor + ")";
+                    console.log("Zoom уменьшение");
+
+                    transformation = 'scale(' + this.scale_factor + ')';
             
-        });
+                    image.style.webkitTransform = transformation;
+                    image.style.transform = transformation
+                }
+            }
+            this.startDistance = this.currentDistance;
+        }
+    },
+
+    onPointerUp: function (image, event) {
+
+        event.preventDefault();
+        this.currentImageX = this.currentImageX + this.currentPointerX;
+        //this.startDistance = this.currentDistance;
+        
     }
+
 }
 
