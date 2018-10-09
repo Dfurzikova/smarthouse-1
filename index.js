@@ -199,7 +199,7 @@ var events = {
 
     onPointerMove: function (image, event) {
         event.preventDefault();
-        
+
         this.directionX(image);
 
         this.pointers[event.pointerId] = event;
@@ -258,6 +258,7 @@ var events = {
     },
 
     directionX: function (image) {
+        var directionIndicator =  document.querySelector('.cam-image_direction-indicator');
 
         if (!this.currentStartX) {
             return
@@ -265,17 +266,20 @@ var events = {
         
         this.currentPointerX = this.getXPoint() - this.currentStartX;
         image.style.left = (this.currentImageX + this.currentPointerX) + 'px';
-
-
+        directionIndicator.style.left = 50 + (-(this.currentImageX + this.currentPointerX) / 10)  + '%';
     },
 
     pinchZoom: function (image) {
+        
+        var approximationValue = document.querySelector('.approximation');
         this.currentDistance = this.getDistance();
         this.lastZoom = this.currentZoom * (this.currentDistance / this.startDistance);
 
-        image.style.transform = 'translate(-50%, -50%) scale(' + this.lastZoom + ')';
+        image.style.transform = 'translate(0, -50%) scale(' + this.lastZoom + ')';
+        
+        approximationValue.innerHTML = Math.round(100 * this.lastZoom) + '%';
 
-        document.querySelector('.approximation').innerHTML = Math.round(100 * this.lastZoom) + '%';
+        
     }
 
 }

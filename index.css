@@ -292,7 +292,7 @@ body {
     touch-action: none;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 0;
     transform: translate(-50%, -50%);
 }
 
@@ -542,6 +542,16 @@ body {
         overflow: hidden;
         margin-top: 20px;
     }
+    .cam-image_direction-indicator{
+        height: 6px;
+        width: 30%;
+       
+        background-color: #fc0;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
     .card-item_cam-info {
         display: flex;
@@ -630,5 +640,7 @@ body {
     .cam-container__cam-image {
         min-height: 245px;
     }
+
+    
    
 }
