@@ -242,7 +242,6 @@ body {
 }
 
 .card-item__image {
-    margin-top: 22px;
     width: 100%;
     border-radius: 20px;
 }
@@ -292,29 +291,37 @@ body {
     font-family: Arial-BoldMT, Arial;
 }
 .cam-image {
+
+    background-image: url('assets/Bitmap.jpg');
+    background-image: -webkit-image-set(
+    url('assets/Bitmap.jpg') 1x,
+    url('assets/Bitmap@2x.jpg') 2x,
+    url('assets/Bitmap@3x.jpg') 3x
+  );
+
     user-select: none;
     -webkit-user-select: none;
     touch-action: none;
-
+    height: 100%;
     position: absolute;
-    top:0;
-    /* left: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin-left: 20px;
-    margin-right: 20px; */
-    overflow: hidden;
-    background-repeat: repeat;
+    background-position: 0 center;
 }
 
-.cam-container {
-    position: relative;
-    min-height: 345px;
-}
 
 .card-item_cam-info {
     display: none;
+}
+
+.cam-container__cam-info {
+    display: none;
+}
+
+.cam-container__cam-image {
+    min-height: 424px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
 }
 
 .card-item__music-player {
@@ -470,12 +477,7 @@ body {
     line-height: 65px;
 
 }
-@media screen and (max-width: 1030px) {
 
-    .page-content-container {
-        grid-template-columns: repeat(6, 140px);
-    }
-}
 @media screen and (max-width: 1023px) {
 
     .page-content-container {
@@ -540,14 +542,23 @@ body {
         margin-top: 0;
     }
 
+    .cam-container__cam-info {
+        display: block;
+    }
+
+    .cam-container__cam-image {
+        min-height: 300px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        margin-top: 20px;
+    }
+
     .card-item_cam-info {
         display: flex;
         font-size: 0.750em;
         justify-content: space-between;
-        margin-top: 10px;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
+        margin-top: 20px;
     }
 
     .footer {
@@ -569,6 +580,10 @@ body {
 
     .header {
         height: 70px;
+    }
+
+    .footer {
+        display: none;
     }
 
     .page-content__title {
@@ -622,8 +637,11 @@ body {
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-    .cam-container {
-        min-height: 203px;
+    
+    .cam-container__cam-image {
+        min-height: 245px;
     }
    
+
+    
 }
