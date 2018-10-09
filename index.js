@@ -152,9 +152,10 @@ var page = {
 };
 
 var events = {
+    pointers: {},
 
     init: function () {
-        
+
         var isTouchCapable = 'ontouchstart' in window ||
         window.DocumentTouch && document instanceof window.DocumentTouch ||
         navigator.maxTouchPoints > 0 ||
@@ -171,46 +172,89 @@ var events = {
         image.addEventListener('pointerdown', this.onPointerDown.bind(this, image));
         image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
         image.addEventListener('pointerup', this.onPointerUp.bind(this, image));
+        image.addEventListener('pointercancel', this.onPointerUp.bind(this, image));
 
-       
     },
 
     onPointerDown: function (image, event) {
         event.preventDefault();
         image.setPointerCapture(event.pointerId);
-        this.scaling = false;
-
-        this.currentImageX = this.currentImageX || 0;
-        this.currentStartX = event.x;
-        this.currentStartY = event.y
-
+       
         this.pointerArr = this.pointerArr || [];
 
-        this.pointerArr.push(event);
-        this.pointerArr = this.pointerArr.slice(-2)
+        this.pointerArr.push(event.pointerId);
+        this.pointerArr = this.pointerArr.slice(-2);
 
+        this.pointers[event.pointerId] = event;
+
+        this.currentImageX = this.currentImageX || 0;
+        this.currentZoom = this.currentZoom || 1;
+        this.currentStartX = this.getXPoint();
 
         if (this.pointerArr.length === 2) {
 
-            this.startDistance = this.getDistance(this.pointerArr[0], this.pointerArr[1]);
-            this.scaling = true;
-
-        } else {
-
-            this.scaling = false
-
+            this.startDistance = this.getDistance();
         }
     },
 
-    getDistance: function (finger1, finger2) {
-        return (Math.sqrt(Math.pow((finger1.clientX - finger2.clientX), 2) + Math.pow((finger1.clientY - finger2.clientY), 2)))
-    },
-
     onPointerMove: function (image, event) {
-
         event.preventDefault();
+        
         this.directionX(image);
 
+        this.pointers[event.pointerId] = event;
+
+        if (this.pointerArr.length === 2) {
+
+            this.pinchZoom(image, event);
+        }
+    },
+
+    onPointerUp: function (image, event) {
+        event.preventDefault();
+        this.currentImageX = this.currentImageX + this.currentPointerX;
+        this.startDistance = this.currentDistance;
+
+        delete this.pointers[event.pointerId];
+
+        this.pointerArr = this.pointerArr.filter(function(id){
+            return event.pointerId !== id;
+        });
+
+        this.currentZoom = this.lastZoom;
+
+        if (this.pointerArr.length) {
+            this.currentStartX = this.getXPoint();
+        }
+    },
+
+    getXPoint: function() {
+        var fingers = this.pointerArr;
+        var finger1 = this.pointers[fingers[0]];
+        var finger2 = this.pointers[fingers[1]];
+        var min;
+        var max;
+        var diff;
+
+        if (!finger2) {
+            return finger1.x;
+        }
+        
+        min = Math.min(finger1.x, finger2.x);
+        max = Math.max(finger1.x, finger2.x);
+
+        diff = max - min;
+
+        return min + (diff / 2)
+
+    },
+
+    getDistance: function () {
+        var fingers = this.pointerArr;
+        var finger1 = this.pointers[fingers[0]];
+        var finger2 = this.pointers[fingers[1]];
+
+        return (Math.sqrt(Math.pow((finger1.clientX - finger2.clientX), 2) + Math.pow((finger1.clientY - finger2.clientY), 2)))
     },
 
     directionX: function (image) {
@@ -218,69 +262,20 @@ var events = {
         if (!this.currentStartX) {
             return
         }
-
-        if (this.pointerArr.length === 2) {
-            this.pinchZoom(image, event);
-            return
-        }
-
-        this.currentPointerX = event.x - this.currentStartX;
-
-        image.style.backgroundPosition = (this.currentImageX + this.currentPointerX) + 'px';
+        
+        this.currentPointerX = this.getXPoint() - this.currentStartX;
+        image.style.left = (this.currentImageX + this.currentPointerX) + 'px';
 
 
     },
 
     pinchZoom: function (image) {
+        this.currentDistance = this.getDistance();
+        this.lastZoom = this.currentZoom * (this.currentDistance / this.startDistance);
 
-        this.scale_factor = 1;
-        this.curr_scale = 1.0;
-        var transformation;
+        image.style.transform = 'translate(-50%, -50%) scale(' + this.lastZoom + ')';
 
-        for (var i = 0; i < this.pointerArr.length; i++) {
-            if (event.pointerId === this.pointerArr[i].pointerId) {
-                this.pointerArr[i] = event;
-                break;
-            }
-        }
-
-        if (this.scaling) {
-            this.currentDistance = this.getDistance(this.pointerArr[0], this.pointerArr[1]);
-
-            if (this.startDistance > 0) {
-
-
-                if (this.currentDistance > this.startDistance) {
-                    
-                    this.scale_factor += 0.05;
-                    console.log("Zoom увеличение");
-                    transformation = "scale(2, 2)";
-
-                    image.style.webkitTransform = transformation;
-                    image.style.transform = transformation
-                }
-
-                if (this.currentDistance < this.startDistance) {
-                    this.scale_factor -= 0.05;
-                    //transformation = "scale(" + this.scale_factor + ")";
-                    console.log("Zoom уменьшение");
-
-                    transformation = 'scale(' + this.scale_factor + ')';
-            
-                    image.style.webkitTransform = transformation;
-                    image.style.transform = transformation
-                }
-            }
-            this.startDistance = this.currentDistance;
-        }
-    },
-
-    onPointerUp: function (image, event) {
-
-        event.preventDefault();
-        this.currentImageX = this.currentImageX + this.currentPointerX;
-        //this.startDistance = this.currentDistance;
-        
+        document.querySelector('.approximation').innerHTML = Math.round(100 * this.lastZoom) + '%';
     }
 
 }
