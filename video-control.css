@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 1.25em;
+    color: #333333;
+    font-family: ArialMT, Arial;
+    min-height: 100vh;
+}
+
+.page {}
+
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-auto-rows: auto;
+    grid-gap: 40px;
+    margin: 0 auto;
+    width: 65%;
+    margin-top: 30px;
+}
+
+.video-item {
+    width: 300px;
+    height: 200px;
+}
+.video {
+    width: 300px;
+    height: 200px;
+}
