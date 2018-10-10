@@ -294,6 +294,12 @@ body {
     top: 50%;
     left: 0;
     transform: translate(0 , -50%);
+    border-radius: 20px;
+}
+.card-item__image {
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 20px;
 }
 
 .card-item_cam-info {
@@ -517,10 +523,23 @@ body {
         position: absolute;
         right: 0px;
         margin-right: 20px;
-    }
+        z-index: 3;
+ }
 
     .menu {
         display: none;
+        position: absolute;
+        right: 0;
+        background-color: #fc0;
+        z-index: 2;
+        top: 0px;
+    }
+    /* .visible {
+        display: block;
+    } */
+
+    .menu__item {
+        padding: 7px 0 7px 0;
     }
     
     .page-content-container {
@@ -597,6 +616,8 @@ body {
         width: 35px;
     }
 
+    
+
     .card-item__title {
         font-size: 0.875em;
     }
@@ -650,8 +671,4 @@ body {
         left: 0;
         transform: translate(-50% , -50%);
     }
-    
-
-    
-   
 }
