@@ -54,9 +54,8 @@ body {
 }
 
 .adaptive-icon-list {
-    background-image: url('assets/icon_list_m.png');
+    background: url('assets/icon_list_m.png') no-repeat center center;
     background-image: -webkit-image-set( url('assets/icon_list_m.png') 1x, url('assets/icon_list_m@2x.png') 2x);
-    background-repeat: no-repeat;
     display: none;
     width: 14px;
     height: 16px;
@@ -522,21 +521,21 @@ body {
         display: inline-block;
         position: absolute;
         right: 0px;
-        margin-right: 20px;
+        top: 0;
+        padding: 20px;
         z-index: 3;
  }
 
     .menu {
         display: none;
         position: absolute;
-        right: 0;
+        right: 10px;
+        top: 10px;
         background-color: #fc0;
+        border-radius: 10px;
         z-index: 2;
-        top: 0px;
+        margin: 0;
     }
-    /* .visible {
-        display: block;
-    } */
 
     .menu__item {
         padding: 7px 0 7px 0;
@@ -561,10 +560,10 @@ body {
         overflow: hidden;
         margin-top: 20px;
     }
+
     .cam-image_direction-indicator{
         height: 6px;
         width: 30%;
-       
         background-color: #fc0;
         position: absolute;
         bottom: 0;
@@ -617,7 +616,6 @@ body {
     }
 
     
-
     .card-item__title {
         font-size: 0.875em;
     }
