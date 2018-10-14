@@ -4,26 +4,139 @@ body {
     font-size: 1.25em;
     color: #333333;
     font-family: ArialMT, Arial;
-    min-height: 100vh;
+    min-height: 100vh;;
 }
 
-.page {}
+.video-page__video-container {
+    margin-top: 50px;
+}
 
-.video-container {
+.video-content {
+    margin-top: 50px;
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-auto-rows: auto;
-    grid-gap: 40px;
+    grid-template-columns: repeat(2, 300px);
+    grid-gap: 20px;
+    justify-content: space-around;
     margin: 0 auto;
-    width: 65%;
-    margin-top: 30px;
+    width: 50%;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #000;
+}
+
+.video_size_full {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 1s;
 }
 
 .video-item {
     width: 300px;
     height: 200px;
 }
-.video {
-    width: 300px;
-    height: 200px;
+
+.video-controls {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    display: none;
+    background-color: #fafafa;
+    width: 250px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+   
+}
+
+.button__backward, .button__volume {
+    border-radius: 8px;
+    width: 132px;
+    height: 54px;
+    font-family: Arial-BoldMT, Arial;
+    color: #000000;
+    background-color: #fc0;
+    line-height: 54px;
+    text-align: center;
+}
+
+.video-controls_position {
+    margin: 20px 0 20px 0;
+}
+
+.video-controls__title {
+    margin-top: 10px;
+}
+
+.input-control {
+    -webkit-appearance: none;
+    width: 80%;
+    height: 3px;
+    background: rgba(216, 216, 216, 0.3);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.input-control:focus {
+    outline: none;
+}
+
+.input-control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    border-radius: 26px;
+    background: #fc0;
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.video-controls_volume-container {
+    width: 100%;
+    height: 20px;
+    margin: 0 20px;
+    border: 1px solid gray;
+}
+
+.video-controls__background {
+    width: 100%;
+    height: 100%;
+    background-color: #fc0;
+}
+
+@media screen and (max-width: 375px) {
+    .video-content {
+        /* grid-template-columns: repeat(2, auto); */
+        grid-template-columns: auto; 
+        grid-gap: 15px;
+        width: 80%;
+    }
+
+    .video {
+        width: 100%;
+    }
+
+    .video-controls {
+        top:0;
+        width:100%;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+
+    .video-controls_position {
+        margin: 5px 0 5px 0;
+    }
+
+    .button__backward, .button__volume {
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+    }
+
 }

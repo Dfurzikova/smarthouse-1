@@ -3,36 +3,63 @@
 
 <head>
     <title>Яндекс Дом</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <link rel="stylesheet" href="video-control.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
     <script src="video-control.js"></script>
+
 </head>
 
-<body>
+<body touch-action="none">
     <div class="video-page">
-        <div class="video-container">
-            <div class="video-item">
-                <video id="video-1" class="video" controls muted autoplay></video>
-            </div>
+        <div class="video-page__video-container">
+            <div class="video-content">
+                <div class="video-item">
+                    <video id="video-0" class="video" muted playsinline></video>
+                </div>
 
-            <div class="video-item">
-                <video id="video-2" class="video" controls muted autoplay></video>
-            </div>
+                <div class="video-item">
+                    <video id="video-1" class="video" muted playsinline></video>
+                </div>
 
-            <div class="video-item">
-                <video id="video-3" class="video" controls muted autoplay></video>
-            </div>
-            
-            <div class="video-item">
-                <video id="video-4" class="video" controls muted autoplay></video>
-            </div>
+                <div class="video-item">
+                    <video id="video-2" class="video" muted playsinline></video>
+                </div>
 
+                <div class="video-item">
+                    <video id="video-3" class="video" muted playsinline></video>
+                </div>
+                
+                <div class="video-item">
+                    <video class="video" src="gopro.mp4" muted autoplay playsinline></video>
+                </div>
+
+            </div>
+            <div class="video-controls">
+                <div class="button video-controls_position button__backward">Назад</div>
+                <div class="button video-controls_position button__volume">Звук</div>
+
+                <span class="video-controls__title">Яркость</span>
+                <input class="input brightness video-controls_position input-control" control="brightness" type="range"
+                    value="100" min="0" max="200" step="10" />
+
+                <span class="video-controls__title">Контрастность</span>
+                <input class="input contrast video-controls_position input-control" control="contrast" type="range"
+                    value="100" min="0" max="200" step="10" />
+                <div class="video-controls_volume-container video-controls_position">
+                    <div class="video-controls__background"></div>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+    <div class="full-video-background"></div>
+
 </body>
 
 </html>
