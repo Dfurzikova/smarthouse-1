@@ -12,7 +12,7 @@ var page = {
     getDataEvents: function () {
         var json;
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'events.json', false);
+        xhr.open('GET', 'http://localhost:8000/api/events', false);
         xhr.send();
 
         if (xhr.status != 200) {
