@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     page.init();
     events.init();
+    adaptiveMenu.showMenu();
 });
 
 var page = {
@@ -18,7 +19,7 @@ var page = {
             console.log(xhr.status + ': ' + xhr.statusText);
         } else {
             json = xhr.responseText;
-            //console.log(json);
+            
         }
 
         try {
@@ -61,7 +62,7 @@ var page = {
         dataTmpl.forEach(function (d) {
             var dataField = d.dataset.field;
             d.innerHTML = data[dataField];
-            //  console.log(d);
+          
         })
 
         var dataTemplate = domNode.querySelectorAll('*[data-template]');
@@ -155,6 +156,7 @@ var events = {
     pointers: {},
 
     init: function () {
+        this.bindEvents();
 
         var isTouchCapable = 'ontouchstart' in window ||
         window.DocumentTouch && document instanceof window.DocumentTouch ||
@@ -173,7 +175,6 @@ var events = {
         image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
         image.addEventListener('pointerup', this.onPointerUp.bind(this, image));
         image.addEventListener('pointercancel', this.onPointerUp.bind(this, image));
-
     },
 
     onPointerDown: function (image, event) {
@@ -282,5 +283,23 @@ var events = {
         
     }
 
+};
+
+var adaptiveMenu = {
+    showMenu: function(){
+        var elem  = document.querySelector('.adaptive-icon-list');
+        var menu = document.querySelector('.menu');
+        
+        elem.addEventListener('click', function(){
+
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+           
+        });
+
+       
+
+    
+    }
 }
+
 
