@@ -1,11 +1,3 @@
-interface HTMLElement {
-    content: Element;
-}
-
-interface Node {
-    querySelector<E extends Element = Element>(selectors: string): E | null;
-}
-
 interface Event {
     clientX: number;
     clientY: number;

@@ -124,14 +124,19 @@ class Page {
     }
 
     fillTemplate(name: string, data: TemplateData) {
-        let template = <HTMLElement>document.getElementById(name);
+        let template = <HTMLTemplateElement>document.getElementById(name);
 
         if (!template) {
             return;
         }
 
-        let content = template.content.cloneNode(true);
+        let content = <HTMLElement>template.content.cloneNode(true);
         let domNode = <HTMLElement>content.querySelector('*');
+
+        if (!domNode) {
+            return
+        }
+
         let dataTmpl = domNode.querySelectorAll('*[data-field]');
 
         dataTmpl.forEach((d: Element): void => {
