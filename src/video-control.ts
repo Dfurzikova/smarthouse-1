@@ -1,33 +1,37 @@
+/// <reference path="video-control.d.ts" />
+
 document.addEventListener('DOMContentLoaded', function () {
-    videoPage.init();
+    // videoPage.init();
+    new VideoPage()
 });
 
-var videoPage = {
-    filters: {},
+class VideoPage {
 
-    init: function () {
+    constructor() {
         this.getVideo();
         this.bindEvents();
-    },
+        this.filters = {}; //перенести вниз
+    }
 
-    getVideo: function () {
-        var videos = [
+    getVideo() {
+        const videos = [
             'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8',
             'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8',
             'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8',
             'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8'
         ];
 
-        for (var i = 0; i < videos.length; i++) {
-            this.initVideo(document.getElementById('video-' + i), videos[i]);
+        for (let i = 0; i < videos.length; i++) {
+            let currentVideo = <HTMLVideoElement>document.getElementById('video-' + i)
+
+            this.initVideo(currentVideo, videos[i]);
+
         }
-    },
+    }
 
-    initVideo: function (video, url) {
-        var hls;
-
+    initVideo(video: HTMLVideoElement, url: string) {
         if (Hls.isSupported()) {
-            hls = new Hls();
+            const hls = new Hls();
 
             hls.loadSource(url);
             hls.attachMedia(video);
@@ -40,50 +44,59 @@ var videoPage = {
                 video.play();
             });
         }
-    },
+    }
 
-    bindEvents: function () {
-        var container = document.querySelector('.video-content');
-        var buttonBack = document.querySelector('.button__backward');
-        var controls = document.querySelector('.video-controls');
-        var inputBrightness = document.querySelector('.brightness');
-        var inputContrast = document.querySelector('.contrast');
-        var volume = document.querySelector('.button__volume');
+    bindEvents() {
+        const container = <HTMLElement>document.querySelector('.video-content');
+        const buttonBack = <HTMLElement>document.querySelector('.button__backward');
+        const controls = <HTMLElement>document.querySelector('.video-controls');
+        const inputBrightness = <HTMLElement>document.querySelector('.brightness');
+        const inputContrast = <HTMLElement>document.querySelector('.contrast');
+        const volume = <HTMLElement>document.querySelector('.button__volume');
 
         container.addEventListener('click', this.showFullVideo.bind(this, controls));
         buttonBack.addEventListener('click', this.hideVideo.bind(this, controls));
         volume.addEventListener('click', this.toggleMute.bind(this));
         inputBrightness.addEventListener('input', this.setFilters.bind(this));
         inputContrast.addEventListener('input', this.setFilters.bind(this));
-    },
+    }
 
-    showFullVideo: function (controls, event) {
-        if (event.target.tagName !== 'VIDEO' || this.video === event.target) {
+    showFullVideo(controls: HTMLElement, event: Event) {
+        let videoTargetElem = <HTMLVideoElement>event.target;
+
+
+        if (!videoTargetElem) {
+            return
+        }
+        let elemTag: string = videoTargetElem.tagName
+
+        if (elemTag !== 'VIDEO' || this.video === event.target) {
             return;
         }
-
         event.preventDefault();
-        this.video = event.target;
+
+        this.video = videoTargetElem;
+        this.video.muted = Boolean(0); 
+
+        new VolumeAnalizator(this.video)
         
-        this.video.muted = 0;
-        volumeAnalizator.analyze(this.video);
         this.video.play();
+        let parentNode = <HTMLElement>this.video.parentNode;
 
-
-        this.moveDom(this.video, this.video.parentNode, document.body)
+        this.moveDom(this.video, parentNode, document.body)
             .then(function () {
                 controls.style.display = 'flex';
             })
             .catch(function (error) {
                 console.log(error);
             });
-    },
+    }
 
-    toggleMute: function () {
+    toggleMute() {
         this.video.muted = !this.video.muted;
-    },
+    }
 
-    moveDom: function (dom, from, to, goHome) {
+    moveDom(dom: HTMLElement, from: HTMLElement, to: HTMLElement, goHome?: Boolean) {
         var _this = this;
         var promise = new Promise(function (resolve) {
             _this.setPosition(dom, from);
@@ -110,9 +123,9 @@ var videoPage = {
         }
 
         return promise;
-    },
+    }
 
-    setPosition: function (dom, to) {
+    setPosition(dom: HTMLElement, to: HTMLElement) {
         var toRect = to.getBoundingClientRect();
 
         dom.style.position = 'fixed';
@@ -120,27 +133,38 @@ var videoPage = {
         if (to === document.body) {
             dom.style.width = '100%';
             dom.style.height = '100%';
-            dom.style.left = 0;
-            dom.style.top = 0;
+            dom.style.left = '0';
+            dom.style.top = '0';
         } else {
             dom.style.width = toRect.width + 'px';
             dom.style.height = toRect.height + 'px';
             dom.style.left = toRect.left + 'px';
             dom.style.top = toRect.top + 'px';
         }
-    },
+    }
 
-    hideVideo: function (controls) {
-        this.video.muted = 1;
+    hideVideo(controls: HTMLElement) {
+        this.video.muted = Boolean(1);
+        let parentNode = <HTMLElement>this.video.parentNode;
         controls.style.display = 'none';
-        this.moveDom(this.video, document.body, this.video.parentNode, true);
-    },
+        this.moveDom(this.video, document.body, parentNode, true);
+    }
 
-    setFilters: function (e) {
-        var type = e.target.getAttribute('control');
-        var filters = this.filters;
+    setFilters(e: Event) {
+        let target = <HTMLElement>e.target
+        if (!target) {
+            return
+        }
 
-        filters[type] = e.target.value;
+        const type: string | null = target.getAttribute('control');
+        const filters = this.filters;
+
+        let inputTarget = <HTMLInputElement>e.target;
+        let inputValue: string = inputTarget.value;
+
+        if (type != null) {
+            filters[type] = inputValue;
+        }
 
         this.video.style.filter = Object.keys(filters).reduce(function (acc, key) {
             return acc + key + '(' + filters[key] + '%) ';
@@ -148,22 +172,35 @@ var videoPage = {
     }
 };
 
-var volumeAnalizator = {
-    contexts: {},
+class VolumeAnalizator {
+    constructor(video: HTMLVideoElement) {
+        this.video = video
+        this.contexts = {}
+        this.analyze(video) 
+    }
 
-    analyze: function (video) {
-        if (video.haveContext) {
-            this.analyser = video.analyser;
+    analyze(video: HTMLVideoElement) {
+        // console.log(video);
+        // let haveContext;
+
+        if (video.dataset.context) {
+           
+            // this.analyser = video.analyser;
+            // console.log( this.analyser, ' this.analyser')
+            // console.log( video.analyser, ' this.video.analyser')
             
             return;
         }
 
-        var AudioContext = window.AudioContext || window.webkitAudioContext;
-
+        // const AudioContext = window.AudioContext || window.webkitAudioContext;
+        
         this.context = new AudioContext();
-        video.haveContext = true;
+        
+        video.dataset.context = 'true';
 
-        this.analyser = video.analyser = this.context.createAnalyser();
+        // this.analyser = video.analyser = this.context.createAnalyser();
+        
+        this.analyser = this.context.createAnalyser();
         this.analyser.smoothingTimeConstant = 0.3;
         this.analyser.fftSize = 512;
 
@@ -176,9 +213,9 @@ var volumeAnalizator = {
         this.analyser.connect(this.node);
 
         this.node.addEventListener('audioprocess', this.getVolumeValue.bind(this));
-    },
+    }
 
-    getVolumeValue: function () {
+    getVolumeValue() {
         var array = new Uint8Array(this.analyser.frequencyBinCount);
         var currentVolume;
 
@@ -189,10 +226,10 @@ var volumeAnalizator = {
         });
 
         this.drowValue(currentVolume);
-    },
+    }
 
-    drowValue: function (value) {
-        var volumeBackground = document.querySelector('.video-controls__background');
+    drowValue(value: number) {
+        const volumeBackground = <HTMLElement>document.querySelector('.video-controls__background');
 
         volumeBackground.style.width = (value / 255 * 100) + '%';
     }

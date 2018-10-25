@@ -135,7 +135,7 @@ class Page {
         let dataTmpl = domNode.querySelectorAll('*[data-field]');
 
         dataTmpl.forEach((d: Element): void => {
-            let dataField = d.getAttribute("data-field");
+            let dataField = d.getAttribute('data-field');
 
             if (dataField) {
                 d.innerHTML = String(data[dataField]);
