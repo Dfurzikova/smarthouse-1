@@ -12,8 +12,6 @@ interface Event {
     x: number;
 }
 
-
-
 interface Page {
     templates: { 
         [key: string]: Template
@@ -48,6 +46,7 @@ interface PointerEventsDom {
     pointers: { 
         [key: number]: Event
     };
+    image: HTMLElement;
 
     currentImageX: number;
     currentZoom: number;
@@ -59,12 +58,12 @@ interface PointerEventsDom {
     pointerArr: number[];
 
     bindEvents(): void;
-    onPointerDown(image: HTMLElement, event: PointerEvent): void;
     getXPoint(): number;
     getDistance(): number;
     bindEvents(): void;
 
-    onPointerMove(image: HTMLElement, event: PointerEvent): void;
+    onPointerDown(event: PointerEvent): void;
+    onPointerMove(event: PointerEvent): void;
     onPointerUp(event: PointerEvent): void;
     directionX(image: HTMLElement): void;
     pinchZoom(image: HTMLElement, event: PointerEvent): void;

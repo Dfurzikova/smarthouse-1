@@ -168,24 +168,25 @@ class PointerEventsDom {
     };
 
     bindEvents() {
-        let image = <HTMLImageElement>document.querySelector('.cam-image');
+        this.image = <HTMLImageElement>document.querySelector('.cam-image');
 
-        if (!image) {
+        this.onPointerMove = this.onPointerMove.bind(this);
+
+        if (!this.image) {
             return;
         }
 
-        image.addEventListener('pointerdown', this.onPointerDown.bind(this, image));
-        image.addEventListener('pointerup', this.onPointerUp.bind(this, image));
-        image.addEventListener('pointercancel', this.onPointerUp.bind(this, image));
+        this.image.addEventListener('pointerdown', this.onPointerDown.bind(this));
+        this.image.addEventListener('pointerup', this.onPointerUp.bind(this));
+        this.image.addEventListener('pointercancel', this.onPointerUp.bind(this));
     }
 
-    onPointerDown(image: HTMLElement, event: PointerEvent) {
-        image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
-
+    onPointerDown(event: PointerEvent) {
+        this.image.addEventListener('pointermove', this.onPointerMove);
         this.pointers = {};
 
         event.preventDefault();
-        image.setPointerCapture(event.pointerId);
+        this.image.setPointerCapture(event.pointerId);
         
 
         this.pointerArr = this.pointerArr || [];
@@ -204,21 +205,22 @@ class PointerEventsDom {
         }
     }
 
-    onPointerMove(image: HTMLElement, event: PointerEvent) {
+    onPointerMove(event: PointerEvent) {
         event.preventDefault();
 
-        this.directionX(image);
+        this.directionX(this.image);
 
         this.pointers[event.pointerId] = event;
 
         if (this.pointerArr.length === 2) {
 
-            this.pinchZoom(image);
+            this.pinchZoom(this.image);
         }
     }
 
     onPointerUp(event: PointerEvent) {
         event.preventDefault();
+        this.image.removeEventListener('pointermove', this.onPointerMove);
         this.currentImageX = this.currentImageX + this.currentPointerX;
         this.startDistance = this.currentDistance;
 
