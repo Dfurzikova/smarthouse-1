@@ -1,90 +1,19 @@
+/// <reference path="index.d.ts" />
+
 document.addEventListener('DOMContentLoaded', function () {
-    page.init();
-    events.init();
+    const page = new Page();
+
+    page.getDataEvents().then(() => {
+        new PointerEventsDom();
+    });
+
     adaptiveMenu.showMenu();
 });
 
-var page = {
-    init: function () {
-        this.getDataEvents();
-    },
-
-    getDataEvents: function () {
-        var json;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8000/api/events', false);
-        xhr.send();
-
-        if (xhr.status != 200) {
-            console.log(xhr.status + ': ' + xhr.statusText);
-        } else {
-            json = xhr.responseText;
-            
-        }
-
-        try {
-            json = JSON.parse(json);
-        } catch (e) {
-            json = {};
-            console.error(e.message);
-        }
-
-        this.getEventType(json.events);
-    },
-
-    getEventType: function (events) {
-        var _this = this;
-        if (!events) {
-            return;
-        }
-
-        events.forEach(function (event) {
-            var container = document.querySelector('.page-content-container');
-            var domNode = _this.fillTemplate('card-item', event);
-
-            if (domNode) {
-                container.appendChild(domNode);
-            }
-        });
-    },
-
-    fillTemplate: function (name, data) {
-        var template = document.getElementById(name);
-
-        if (!template) {
-            return;
-        }
-
-        var content = template.content.cloneNode(true);
-        var domNode = content.querySelector('*');
-        var dataTmpl = domNode.querySelectorAll('*[data-field]');
-
-        dataTmpl.forEach(function (d) {
-            var dataField = d.dataset.field;
-            d.innerHTML = data[dataField];
-          
-        })
-
-        var dataTemplate = domNode.querySelectorAll('*[data-template]');
-
-        dataTemplate.forEach(function (node) {
-            var newNode = this.fillTemplate(data.icon, data.data);
-
-            if (newNode) {
-                node.parentNode.replaceChild(newNode, node);
-            } else {
-                node.remove();
-            }
-        }.bind(this));
-
-        if (this['template_' + name]) {
-            return this['template_' + name](domNode, data);
-        }
-    },
-
-    'template_card-item': function (domNode, data) {
-        var icon = domNode.querySelector('.card-item__icon');
-        var description = domNode.querySelector('.card-item__description');
+const templates = {
+    'card-item'(domNode: HTMLElement, data: TemplateData) {
+        let icon = <HTMLImageElement>domNode.querySelector('.card-item__icon');
+        let description = domNode.querySelector('.card-item__description');
 
         domNode.classList.add(
             'card-item_size_' + data.size,
@@ -100,10 +29,10 @@ var page = {
         return domNode;
     },
 
-    'template_thermal': function (domNode, data) {
+    thermal(domNode: HTMLElement, data: TemplateData) {
 
-        var temp = domNode.querySelector('.temperature');
-        var humidity = domNode.querySelector('.humidity');
+        let temp = <HTMLElement>domNode.querySelector('.temperature');
+        let humidity = <HTMLElement>domNode.querySelector('.humidity');
 
         temp.innerHTML = data.temperature + ' C';
         humidity.innerHTML = data.humidity + ' %';
@@ -111,24 +40,23 @@ var page = {
         return domNode;
     },
 
-    'template_music': function (domNode, data) {
-        var albumcover = domNode.querySelector('.song-info__album-cover');
-        var songname = domNode.querySelector('.song_name');
-        var duration = domNode.querySelector('.song-info__song-duration');
-        var volume = domNode.querySelector('.player__volume-rate');
+    music(domNode: HTMLElement, data: { [key: string]: any }) {
+        let albumcover = <HTMLImageElement>domNode.querySelector('.song-info__album-cover');
+        let songname = <HTMLElement>domNode.querySelector('.song_name');
+        let duration = <HTMLElement>domNode.querySelector('.song-info__song-duration');
+        let volume = <HTMLElement>domNode.querySelector('.player__volume-rate');
 
         albumcover.src = data.albumcover;
         songname.innerHTML = data.artist + '-' + data.track.name;
         duration.innerHTML = data.track.length;
         volume.innerHTML = data.volume + '%';
 
-
         return domNode;
     },
 
-    'template_fridge': function (domNode, data) {
+    fridge(domNode: HTMLElement, data: TemplateData) {
 
-        var buttons = domNode.querySelectorAll('.card-item-button');
+        let buttons = domNode.querySelectorAll('.card-item-button');
 
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].innerHTML = data.buttons[i]
@@ -138,54 +66,132 @@ var page = {
         return domNode;
     },
 
-    'template_cam': function (domNode, data) {
+    cam(domNode: HTMLElement, _data?: TemplateData) {
 
         domNode.setAttribute('touch-action', 'none');
 
         return domNode;
     },
 
-    'template_stats': function (domNode, data) {
+    stats(domNode: HTMLElement, _data?: TemplateData) {
 
         return domNode;
+    }
+}
 
+class Page {
+    constructor() {
+        this.templates = templates;
+    };
+
+    getDataEvents() {
+        return new Promise((resolve, reject) => {
+            fetch('http://localhost:8000/api/events')
+                .then((response) => {
+                    if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' + response.status);
+                        return;
+                    }
+                    response.json()
+                        .then((data) => {
+                            resolve(data);
+                            this.getEventType(data.events);
+                        });
+                })
+                .catch((err) => {
+                    reject(err);
+                    console.log('Fetch Error :-S', err);
+                });
+        });
+    }
+
+    getEventType(events: []) {
+        const _this = this;
+
+        if (!events) {
+            return;
+        }
+
+        events.forEach(function (event) {
+
+            let container = <HTMLElement>document.querySelector('.page-content-container');
+            let domNode = _this.fillTemplate('card-item', event);
+
+            if (domNode) {
+                container.appendChild(domNode);
+            }
+        });
+    }
+
+    fillTemplate(name: string, data: TemplateData) {
+        let template = <HTMLElement>document.getElementById(name);
+
+        if (!template) {
+            return;
+        }
+
+        let content = template.content.cloneNode(true);
+        let domNode = <HTMLElement>content.querySelector('*');
+        let dataTmpl = domNode.querySelectorAll('*[data-field]');
+
+        dataTmpl.forEach((d: Element): void => {
+            let dataField = d.getAttribute("data-field");
+
+            if (dataField) {
+                d.innerHTML = String(data[dataField]);
+            }
+        });
+
+        let dataTemplate = domNode.querySelectorAll('*[data-template]');
+
+        dataTemplate.forEach((node: Element) => {
+            if (!node) {
+                return;
+            }
+
+            let newNode = this.fillTemplate(data.icon, data.data);
+
+            if (newNode && node.parentNode) {
+                node.parentNode.replaceChild(newNode, node);
+            } else {
+                node.remove();
+            }
+        });
+
+        return this.templates[name](domNode, data);
     }
 };
 
-var events = {
-    pointers: {},
-
-    init: function () {
+class PointerEventsDom {
+    constructor() {
         this.bindEvents();
+    };
 
-        var isTouchCapable = 'ontouchstart' in window ||
-        window.DocumentTouch && document instanceof window.DocumentTouch ||
-        navigator.maxTouchPoints > 0 ||
-        window.navigator.msMaxTouchPoints > 0;
-        
-        if (isTouchCapable) {
-            this.bindEvents();
+    bindEvents() {
+        let image = <HTMLImageElement>document.querySelector('.cam-image');
+
+        if (!image) {
+            return;
         }
-       
-    },
 
-    bindEvents: function () {
-        var image = document.querySelector('.cam-image');
         image.addEventListener('pointerdown', this.onPointerDown.bind(this, image));
-        image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
         image.addEventListener('pointerup', this.onPointerUp.bind(this, image));
         image.addEventListener('pointercancel', this.onPointerUp.bind(this, image));
-    },
+    }
 
-    onPointerDown: function (image, event) {
+    onPointerDown(image: HTMLElement, event: PointerEvent) {
+        image.addEventListener('pointermove', this.onPointerMove.bind(this, image));
+
+        this.pointers = {};
+
         event.preventDefault();
         image.setPointerCapture(event.pointerId);
-       
+        
+
         this.pointerArr = this.pointerArr || [];
 
         this.pointerArr.push(event.pointerId);
         this.pointerArr = this.pointerArr.slice(-2);
-
         this.pointers[event.pointerId] = event;
 
         this.currentImageX = this.currentImageX || 0;
@@ -196,9 +202,9 @@ var events = {
 
             this.startDistance = this.getDistance();
         }
-    },
+    }
 
-    onPointerMove: function (image, event) {
+    onPointerMove(image: HTMLElement, event: PointerEvent) {
         event.preventDefault();
 
         this.directionX(image);
@@ -207,18 +213,18 @@ var events = {
 
         if (this.pointerArr.length === 2) {
 
-            this.pinchZoom(image, event);
+            this.pinchZoom(image);
         }
-    },
+    }
 
-    onPointerUp: function (image, event) {
+    onPointerUp(event: PointerEvent) {
         event.preventDefault();
         this.currentImageX = this.currentImageX + this.currentPointerX;
         this.startDistance = this.currentDistance;
 
         delete this.pointers[event.pointerId];
 
-        this.pointerArr = this.pointerArr.filter(function(id){
+        this.pointerArr = this.pointerArr.filter(function (id) {
             return event.pointerId !== id;
         });
 
@@ -227,78 +233,71 @@ var events = {
         if (this.pointerArr.length) {
             this.currentStartX = this.getXPoint();
         }
-    },
+    }
 
-    getXPoint: function() {
-        var fingers = this.pointerArr;
-        var finger1 = this.pointers[fingers[0]];
-        var finger2 = this.pointers[fingers[1]];
-        var min;
-        var max;
-        var diff;
+    getXPoint() {
+        const fingers = this.pointerArr;
+        const finger1 = this.pointers[fingers[0]];
+        const finger2 = this.pointers[fingers[1]];
+        let min;
+        let max;
+        let diff;
+        
 
         if (!finger2) {
+            
             return finger1.x;
         }
-        
+
         min = Math.min(finger1.x, finger2.x);
         max = Math.max(finger1.x, finger2.x);
 
         diff = max - min;
 
         return min + (diff / 2)
+    }
 
-    },
-
-    getDistance: function () {
-        var fingers = this.pointerArr;
-        var finger1 = this.pointers[fingers[0]];
-        var finger2 = this.pointers[fingers[1]];
+    getDistance() {
+        let fingers = this.pointerArr;
+        let finger1 = this.pointers[fingers[0]];
+        let finger2 = this.pointers[fingers[1]];
 
         return (Math.sqrt(Math.pow((finger1.clientX - finger2.clientX), 2) + Math.pow((finger1.clientY - finger2.clientY), 2)))
-    },
+    }
 
-    directionX: function (image) {
-        var directionIndicator =  document.querySelector('.cam-image_direction-indicator');
+    directionX(image: HTMLElement) {
+        let directionIndicator = <HTMLElement>document.querySelector('.cam-image_direction-indicator');
 
         if (!this.currentStartX) {
             return
         }
-        
+
         this.currentPointerX = this.getXPoint() - this.currentStartX;
         image.style.left = (this.currentImageX + this.currentPointerX) + 'px';
-        directionIndicator.style.left = 50 + (-(this.currentImageX + this.currentPointerX) / 10)  + '%';
-    },
+        directionIndicator.style.left = 50 + (-(this.currentImageX + this.currentPointerX) / 10) + '%';
+    }
 
-    pinchZoom: function (image) {
-        
-        var approximationValue = document.querySelector('.approximation');
+    pinchZoom(image: HTMLElement) {
+
+        let approximationValue = <HTMLElement>document.querySelector('.approximation');
         this.currentDistance = this.getDistance();
         this.lastZoom = this.currentZoom * (this.currentDistance / this.startDistance);
 
         image.style.transform = 'translate(0, -50%) scale(' + this.lastZoom + ')';
-        
-        approximationValue.innerHTML = Math.round(100 * this.lastZoom) + '%';
 
-        
+        approximationValue.innerHTML = Math.round(100 * this.lastZoom) + '%';
     }
 
 };
 
-var adaptiveMenu = {
-    showMenu: function(){
-        var elem  = document.querySelector('.adaptive-icon-list');
-        var menu = document.querySelector('.menu');
-        
-        elem.addEventListener('click', function(){
+const adaptiveMenu = {
+    showMenu: function () {
+        let elem = <HTMLElement>document.querySelector('.adaptive-icon-list');
+        let menu = <HTMLElement>document.querySelector('.menu');
 
+        elem.addEventListener('click', function () {
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-           
         });
-
-       
-
-    
     }
 }
 
