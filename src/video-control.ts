@@ -1,16 +1,13 @@
 /// <reference path="video-control.d.ts" />
 
-document.addEventListener('DOMContentLoaded', function () {
-    // videoPage.init();
+document.addEventListener('DOMContentLoaded',  () => {
     new VideoPage()
 });
 
 class VideoPage {
-
     constructor() {
         this.getVideo();
         this.bindEvents();
-        this.filters = {}; //перенести вниз
     }
 
     getVideo() {
@@ -25,7 +22,6 @@ class VideoPage {
             let currentVideo = <HTMLVideoElement>document.getElementById('video-' + i)
 
             this.initVideo(currentVideo, videos[i]);
-
         }
     }
 
@@ -35,12 +31,12 @@ class VideoPage {
 
             hls.loadSource(url);
             hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
                 video.play();
             });
         } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
             video.src = url;
-            video.addEventListener('loadedmetadata', function () {
+            video.addEventListener('loadedmetadata', () => {
                 video.play();
             });
         }
@@ -63,11 +59,11 @@ class VideoPage {
 
     showFullVideo(controls: HTMLElement, event: Event) {
         let videoTargetElem = <HTMLVideoElement>event.target;
-
-
+        
         if (!videoTargetElem) {
             return
         }
+
         let elemTag: string = videoTargetElem.tagName
 
         if (elemTag !== 'VIDEO' || this.video === event.target) {
@@ -84,10 +80,10 @@ class VideoPage {
         let parentNode = <HTMLElement>this.video.parentNode;
 
         this.moveDom(this.video, parentNode, document.body)
-            .then(function () {
+            .then(() => {
                 controls.style.display = 'flex';
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -97,14 +93,13 @@ class VideoPage {
     }
 
     moveDom(dom: HTMLElement, from: HTMLElement, to: HTMLElement, goHome?: Boolean) {
-        var _this = this;
-        var promise = new Promise(function (resolve) {
-            _this.setPosition(dom, from);
+        let promise = new Promise((resolve) => {
+            this.setPosition(dom, from);
 
             dom.style.transition = '';
 
-            window.requestAnimationFrame(function () {
-                _this.setPosition(dom, to);
+            window.requestAnimationFrame(() => {
+                this.setPosition(dom, to);
 
                 dom.style.transition = 'all 1s';
                 setTimeout(resolve, 1010);
@@ -112,7 +107,7 @@ class VideoPage {
         });
 
         if (goHome) {
-            promise.then(function () {
+            promise.then(() => {
                 dom.style.transition = '';
                 dom.style.position = '';
                 dom.style.width = '';
@@ -121,12 +116,11 @@ class VideoPage {
                 dom.style.top = '';
             })
         }
-
         return promise;
     }
 
     setPosition(dom: HTMLElement, to: HTMLElement) {
-        var toRect = to.getBoundingClientRect();
+        const toRect = to.getBoundingClientRect();
 
         dom.style.position = 'fixed';
 
@@ -144,19 +138,23 @@ class VideoPage {
     }
 
     hideVideo(controls: HTMLElement) {
-        this.video.muted = Boolean(1);
         let parentNode = <HTMLElement>this.video.parentNode;
+
+        this.video.muted = Boolean(1);
         controls.style.display = 'none';
         this.moveDom(this.video, document.body, parentNode, true);
     }
 
     setFilters(e: Event) {
         let target = <HTMLElement>e.target
+        
         if (!target) {
             return
         }
 
         const type: string | null = target.getAttribute('control');
+
+        this.filters = {};
         const filters = this.filters;
 
         let inputTarget = <HTMLInputElement>e.target;
@@ -166,7 +164,7 @@ class VideoPage {
             filters[type] = inputValue;
         }
 
-        this.video.style.filter = Object.keys(filters).reduce(function (acc, key) {
+        this.video.style.filter = Object.keys(filters).reduce((acc, key) => {
             return acc + key + '(' + filters[key] + '%) ';
         }, '');
     }
@@ -180,25 +178,13 @@ class VolumeAnalizator {
     }
 
     analyze(video: HTMLVideoElement) {
-        // console.log(video);
-        // let haveContext;
-
         if (video.dataset.context) {
            
-            // this.analyser = video.analyser;
-            // console.log( this.analyser, ' this.analyser')
-            // console.log( video.analyser, ' this.video.analyser')
-            
             return;
         }
-
-        // const AudioContext = window.AudioContext || window.webkitAudioContext;
-        
         this.context = new AudioContext();
         
         video.dataset.context = 'true';
-
-        // this.analyser = video.analyser = this.context.createAnalyser();
         
         this.analyser = this.context.createAnalyser();
         this.analyser.smoothingTimeConstant = 0.3;
@@ -216,12 +202,12 @@ class VolumeAnalizator {
     }
 
     getVolumeValue() {
-        var array = new Uint8Array(this.analyser.frequencyBinCount);
-        var currentVolume;
+        const array = new Uint8Array(this.analyser.frequencyBinCount);
+        let currentVolume;
 
         this.analyser.getByteFrequencyData(array);
 
-        currentVolume = array.reduce(function (a, b) {
+        currentVolume = array.reduce((a, b) => {
             return a > b ? a : b
         });
 

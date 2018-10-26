@@ -1,6 +1,6 @@
 /// <reference path="index.d.ts" />
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const page = new Page();
 
     page.getDataEvents().then(() => {
@@ -58,7 +58,7 @@ const templates = {
 
         let buttons = domNode.querySelectorAll('.card-item-button');
 
-        for (var i = 0; i < buttons.length; i++) {
+        for (let i = 0; i < buttons.length; i++) {
             buttons[i].innerHTML = data.buttons[i]
         }
         domNode.querySelectorAll('.card-item-button')[0].classList.add('button_active');;
@@ -112,7 +112,7 @@ class Page {
             return;
         }
 
-        events.forEach(function (event) {
+        events.forEach((event) => {
 
             let container = <HTMLElement>document.querySelector('.page-content-container');
             let domNode = _this.fillTemplate('card-item', event);
@@ -231,7 +231,7 @@ class PointerEventsDom {
 
         delete this.pointers[event.pointerId];
 
-        this.pointerArr = this.pointerArr.filter(function (id) {
+        this.pointerArr = this.pointerArr.filter((id) => {
             return event.pointerId !== id;
         });
 
@@ -298,11 +298,11 @@ class PointerEventsDom {
 };
 
 const adaptiveMenu = {
-    showMenu: function () {
+    showMenu: () => {
         let elem = <HTMLElement>document.querySelector('.adaptive-icon-list');
         let menu = <HTMLElement>document.querySelector('.menu');
 
-        elem.addEventListener('click', function () {
+        elem.addEventListener('click', () => {
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         });
     }
