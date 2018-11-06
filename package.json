@@ -17,7 +17,9 @@
     "tslint-eslint-rules": "^5.4.0"
   },
   "scripts": {
-    "start": "tsc && http-server ."
+    "start": "tsc && http-server .",
+    "build-index": "tsc --build tsconfig-index.json",
+    "build-video-control": "tsc --build tsconfig-video-control.json"
   },
   "repository": {
     "type": "git",
