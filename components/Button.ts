@@ -1,7 +1,7 @@
 import { Component } from '../framework/MyFlux';
 
 export class Button extends Component {
-    constructor(params: { [keys: string]: any }) {
+    constructor(params: { [keys: string]: any }){
         super(params);
 
         this.onClick = this.onClick.bind(this);
@@ -9,7 +9,9 @@ export class Button extends Component {
         this.dom.addEventListener('click', this.onClick);
     }
 
-    onClick (){}
+    onClick (e: Event){
+       
+    }
     render(): void {
         super.render();
     }

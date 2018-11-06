@@ -1,2 +1,3 @@
 export { Button } from './Button'
-export { VideoItem } from './VideoItem'
+export { VideoContent } from './VideoContent'
+export { VolumeButton } from './VolumeButton'
