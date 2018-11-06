@@ -302,6 +302,10 @@ const adaptiveMenu = {
         let elem = <HTMLElement>document.querySelector('.adaptive-icon-list');
         let menu = <HTMLElement>document.querySelector('.menu');
 
+        if (!elem){
+            return
+        }
+        
         elem.addEventListener('click', () => {
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         });
