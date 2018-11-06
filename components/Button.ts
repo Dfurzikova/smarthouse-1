@@ -9,7 +9,7 @@ export class Button extends Component {
         this.dom.addEventListener('click', this.onClick);
     }
 
-    onClick (e: Event){}
+    onClick (){}
     render(): void {
         super.render();
     }
