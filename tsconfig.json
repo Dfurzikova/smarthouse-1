@@ -3,7 +3,7 @@
     "module": "amd",
     "target": "es2015",
     "declaration": false,
-    "outDir": "./build",
+    "outFile": "./build/index.js",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
