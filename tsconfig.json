@@ -16,7 +16,8 @@
         "shri-2018-2-multimedia-homework"
     ],
     "include": [
-      "./src/index.ts"
+      "./src/index.ts",
+      "./src/video-control.ts"
     ],
     "lib": [
       "es2016",
