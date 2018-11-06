@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "module": "amd",
+      "target": "es2015",
+      "declaration": false,
+      "outFile": "./build/index.js",
+      "strict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true
+    },
+    "exclude": [
+        "node_modules",
+        "shri-2018-2-multimedia-homework"
+    ],
+    "include": [
+      "./src/index.ts"
+    ],
+    "lib": [
+      "es2016",
+      "dom",
+      "es5"
+    ]
+  }
+  
