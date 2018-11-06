@@ -1,8 +1,26 @@
-/// <reference path="video-control.d.ts" />
-
+import * as MyFlux  from '../framework/MyFlux';
+import * as components from '../components/All';
+import * as Hls from 'hls.js';
 document.addEventListener('DOMContentLoaded',  () => {
     new VideoPage()
 });
+
+interface VideoPage {
+    filters:{ 
+        [key: string]: string
+    };
+    video: HTMLVideoElement;
+}
+interface VolumeAnalizator {
+    video:HTMLVideoElement;
+    contexts:{ 
+        [key: string]: string
+    };
+    context: AudioContext;
+    analyser: AnalyserNode;
+    source: MediaElementAudioSourceNode;
+    node: ScriptProcessorNode
+}
 
 class VideoPage {
     constructor() {
@@ -220,3 +238,6 @@ class VolumeAnalizator {
         volumeBackground.style.width = (value / 255 * 100) + '%';
     }
 }
+MyFlux.init({
+    components
+});
