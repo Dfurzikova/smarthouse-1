@@ -1,14 +1,7 @@
 /// <reference path="index.d.ts" />
 
-document.addEventListener('DOMContentLoaded', () => {
-    const page = new Page();
-
-    page.getDataEvents().then(() => {
-        new PointerEventsDom();
-    });
-
-    adaptiveMenu.showMenu();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+// });
 
 const templates = {
     'card-item'(domNode: HTMLElement, data: TemplateData) {
@@ -312,4 +305,10 @@ const adaptiveMenu = {
     }
 }
 
+const page = new Page();
 
+page.getDataEvents().then(() => {
+    new PointerEventsDom();
+});
+
+adaptiveMenu.showMenu();

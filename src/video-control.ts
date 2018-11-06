@@ -1,10 +1,6 @@
 import * as MyFlux  from '../framework/MyFlux';
 import * as components from '../components/All';
-import Hls from 'hls.js';
-
-document.addEventListener('DOMContentLoaded',  () => {
-    new VideoPage();
-});
+// import * as Hls from 'hls.js';
 
 interface VideoPage {
     filters:{ 
@@ -22,8 +18,17 @@ interface VolumeAnalizator {
     source: MediaElementAudioSourceNode;
     node: ScriptProcessorNode
 }
+type K_MANIFEST_PARSED = "hlsManifestParsed";
 
-class VideoPage {
+declare class Hls {
+    static isSupported(): boolean;
+    loadSource(source: string): void;
+    attachMedia(videoElement: HTMLVideoElement): void;
+    on(event: K_MANIFEST_PARSED, callback: (event: K_MANIFEST_PARSED, data: Hls.manifestParsedData) => void): void;
+    static Events: { MANIFEST_PARSED: K_MANIFEST_PARSED}
+}
+
+class VideoPage  {
     constructor() {
         this.getVideo();
         this.bindEvents();
@@ -44,9 +49,9 @@ class VideoPage {
         }
     }
 
-    initVideo(video: HTMLVideoElement, url: string) {
+    initVideo(video: HTMLVideoElement, url: string)  {
         if (Hls.isSupported()) {
-            const hls = new Hls();
+            const hls= new Hls();
 
             hls.loadSource(url);
             hls.attachMedia(video);
@@ -239,6 +244,9 @@ class VolumeAnalizator {
         volumeBackground.style.width = (value / 255 * 100) + '%';
     }
 }
+
 MyFlux.init({
     components
 });
+
+new VideoPage();
