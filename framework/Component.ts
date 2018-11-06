@@ -3,17 +3,17 @@ import { Store } from "./Store";
 
 export class Component {
     dom: HTMLElement
-    state: { [keys: string]: any }
+    state: any;
     store: any
     
-    constructor(params) {
+    constructor(params: { [keys: string]: any }) {
         this.dom = params.dom;
         this.store = new Store({
             actions: this.getActions(),
             onChange: this.render.bind(this)
         });
 
-        let dataFlux = this.dom.dataset.flux
+        let dataFlux: string = String(this.dom.dataset.flux);
         let data = {};
 
         try {
@@ -27,7 +27,7 @@ export class Component {
         this.render();
     }
 
-    action(action){
+    action(action: { [keys: string]: any }){
         Dispatcher.dispatch(action);
     }
 

@@ -1,8 +1,9 @@
 import * as MyFlux  from '../framework/MyFlux';
 import * as components from '../components/All';
-import * as Hls from 'hls.js';
+import Hls from 'hls.js';
+
 document.addEventListener('DOMContentLoaded',  () => {
-    new VideoPage()
+    new VideoPage();
 });
 
 interface VideoPage {

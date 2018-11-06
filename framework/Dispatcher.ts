@@ -1,15 +1,18 @@
-type Action = string | number;
-type State = { [keys: string]: any; };
+type State = { [keys: string]: any };
+type Action = { [keys: string]: any };
 
-const _state: State = {};
-const _eventCallbacks = [];
-
-export function register (callback){
-    _eventCallbacks.push(callback);
-    
+interface DisplatcherCallback {
+    (action: Action): void;
 }
 
-export function dispatch (action) {
+const _state: State = {};
+const _eventCallbacks: DisplatcherCallback[] = [];
+
+export function register (callback: DisplatcherCallback){
+    _eventCallbacks.push(callback);
+}
+
+export function dispatch (action: Action) {
     _eventCallbacks.forEach((cb) => cb(action));
 }
 
