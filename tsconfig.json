@@ -7,10 +7,22 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "node",
   },
   "exclude": [
       "node_modules",
       "shri-2018-2-multimedia-homework"
-  ]
+  ],
+  "include": [
+    "./src/index.ts"
+],
+  "lib": [
+    "es2016",
+    "dom",
+    "es5"
+],
+//   "files": [
+//     "framework/MyFlux.ts",
+// ]
 }
