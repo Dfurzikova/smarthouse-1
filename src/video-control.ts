@@ -45,6 +45,10 @@ class VideoPage  {
         for (let i = 0; i < videos.length; i++) {
             let currentVideo = <HTMLVideoElement>document.getElementById('video-' + i)
 
+            if (!currentVideo) {
+                continue;
+            }
+
             this.initVideo(currentVideo, videos[i]);
         }
     }
@@ -72,11 +76,16 @@ class VideoPage  {
         const controls = <HTMLElement>document.querySelector('.video-controls');
         const inputBrightness = <HTMLElement>document.querySelector('.brightness');
         const inputContrast = <HTMLElement>document.querySelector('.contrast');
-        const volume = <HTMLElement>document.querySelector('.button__volume');
+        // const volume = <HTMLElement>document.querySelector('.button__volume');
+
+        if (!container) {
+            return;
+
+        }
 
         container.addEventListener('click', this.showFullVideo.bind(this, controls));
         buttonBack.addEventListener('click', this.hideVideo.bind(this, controls));
-        volume.addEventListener('click', this.toggleMute.bind(this));
+        // volume.addEventListener('click', this.toggleMute.bind(this));
         inputBrightness.addEventListener('input', this.setFilters.bind(this));
         inputContrast.addEventListener('input', this.setFilters.bind(this));
     }
@@ -112,9 +121,9 @@ class VideoPage  {
             });
     }
 
-    toggleMute() {
-        this.video.muted = !this.video.muted;
-    }
+    // toggleMute() {
+    //     this.video.muted = !this.video.muted;
+    // }
 
     moveDom(dom: HTMLElement, from: HTMLElement, to: HTMLElement, goHome?: Boolean) {
         let promise = new Promise((resolve) => {
