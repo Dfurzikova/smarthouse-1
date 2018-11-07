@@ -23,8 +23,6 @@ export class Component {
         }
 
         this.store.setState(data);
-
-        this.render();
     }
 
     action(action: { [keys: string]: any }){
