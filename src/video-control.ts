@@ -104,8 +104,7 @@ class VideoPage  {
         }
         event.preventDefault();
 
-        this.video = videoTargetElem;
-        this.video.muted = Boolean(0); 
+        this.video = videoTargetElem; 
 
         new VolumeAnalizator(this.video)
         
@@ -120,10 +119,6 @@ class VideoPage  {
                 console.log(error);
             });
     }
-
-    // toggleMute() {
-    //     this.video.muted = !this.video.muted;
-    // }
 
     moveDom(dom: HTMLElement, from: HTMLElement, to: HTMLElement, goHome?: Boolean) {
         let promise = new Promise((resolve) => {
