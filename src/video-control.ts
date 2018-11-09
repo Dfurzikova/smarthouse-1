@@ -1,4 +1,20 @@
-/// <reference path="video-control.d.ts" />
+
+interface VideoPage {
+    filters: { 
+        [key: string]: string
+    };
+    video: HTMLVideoElement;
+}
+interface VolumeAnalizator {
+    video: HTMLVideoElement;
+    contexts: { 
+        [key: string]: string
+    };
+    context: AudioContext;
+    analyser: AnalyserNode;
+    source: MediaElementAudioSourceNode;
+    node: ScriptProcessorNode
+}
 
 document.addEventListener('DOMContentLoaded',  () => {
     new VideoPage()
@@ -19,7 +35,7 @@ class VideoPage {
         ];
 
         for (let i = 0; i < videos.length; i++) {
-            let currentVideo = <HTMLVideoElement>document.getElementById('video-' + i)
+            const currentVideo = <HTMLVideoElement>document.getElementById('video-' + i)
 
             this.initVideo(currentVideo, videos[i]);
         }
@@ -58,13 +74,13 @@ class VideoPage {
     }
 
     showFullVideo(controls: HTMLElement, event: Event) {
-        let videoTargetElem = <HTMLVideoElement>event.target;
+        const videoTargetElem = <HTMLVideoElement>event.target;
         
         if (!videoTargetElem) {
             return
         }
 
-        let elemTag: string = videoTargetElem.tagName
+        const elemTag: string = videoTargetElem.tagName
 
         if (elemTag !== 'VIDEO' || this.video === event.target) {
             return;
@@ -77,7 +93,7 @@ class VideoPage {
         new VolumeAnalizator(this.video)
         
         this.video.play();
-        let parentNode = <HTMLElement>this.video.parentNode;
+        const parentNode = <HTMLElement>this.video.parentNode;
 
         this.moveDom(this.video, parentNode, document.body)
             .then(() => {
@@ -93,7 +109,7 @@ class VideoPage {
     }
 
     moveDom(dom: HTMLElement, from: HTMLElement, to: HTMLElement, goHome?: Boolean) {
-        let promise = new Promise((resolve) => {
+        const promise = new Promise((resolve) => {
             this.setPosition(dom, from);
 
             dom.style.transition = '';
@@ -138,7 +154,7 @@ class VideoPage {
     }
 
     hideVideo(controls: HTMLElement) {
-        let parentNode = <HTMLElement>this.video.parentNode;
+        const parentNode = <HTMLElement>this.video.parentNode;
 
         this.video.muted = Boolean(1);
         controls.style.display = 'none';
@@ -146,7 +162,7 @@ class VideoPage {
     }
 
     setFilters(e: Event) {
-        let target = <HTMLElement>e.target
+        const target = <HTMLElement>e.target
         
         if (!target) {
             return
@@ -157,8 +173,8 @@ class VideoPage {
         this.filters = {};
         const filters = this.filters;
 
-        let inputTarget = <HTMLInputElement>e.target;
-        let inputValue: string = inputTarget.value;
+        const inputTarget = <HTMLInputElement>e.target;
+        const inputValue: string = inputTarget.value;
 
         if (type != null) {
             filters[type] = inputValue;
