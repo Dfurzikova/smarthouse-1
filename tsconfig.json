@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es2015",
+    "declaration": false,
+    "outDir": "./build",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+      "node_modules",
+      "shri-2018-2-multimedia-homework"
+  ]
+}
