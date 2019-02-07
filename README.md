@@ -1,6 +1,8 @@
 # smarthouse-1
-ДЗ - «Адаптивная вёрстка»
 
+Домашнее Задание в ШРИ - «Адаптивная вёрстка» + TouchEvents + Typescript
+
+Production build - https://dfurzikova.github.io/smarthouse-1/
 
 # Для установки потребуется:
 ```sh
