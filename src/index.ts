@@ -1,3 +1,4 @@
+console.log('d')
 interface Event {
     clientX: number;
     clientY: number;
@@ -5,7 +6,7 @@ interface Event {
 }
 
 interface Page {
-    templates: { 
+    templates: {
         [key: string]: Template
     };
     getDataEvents(): Promise<FetchData>;
@@ -18,9 +19,9 @@ interface FetchData {
 }
 
 interface TemplateData {
-    [key: string]: 
-        string | 
-        TemplateData | 
+    [key: string]:
+        string |
+        TemplateData |
         string[];
     type: string;
     title: string;
@@ -33,7 +34,7 @@ interface TemplateData {
 }
 
 interface PointerEventsDom {
-    pointers: { 
+    pointers: {
         [key: number]: Event
     };
     image: HTMLElement;
@@ -146,7 +147,7 @@ class Page {
 
     getDataEvents() {
         return new Promise((resolve, reject) => {
-            fetch('http://localhost:8000/api/events')
+            fetch('./events.json')
                 .then((response) => {
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
@@ -252,7 +253,7 @@ class PointerEventsDom {
 
         event.preventDefault();
         this.image.setPointerCapture(event.pointerId);
-        
+
 
         this.pointerArr = this.pointerArr || [];
 
@@ -309,10 +310,10 @@ class PointerEventsDom {
         let min;
         let max;
         let diff;
-        
+
 
         if (!finger2) {
-            
+
             return finger1.x;
         }
 
