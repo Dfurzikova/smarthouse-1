@@ -1,4 +1,3 @@
-console.log('d')
 interface Event {
     clientX: number;
     clientY: number;
