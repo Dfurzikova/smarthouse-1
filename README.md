@@ -1,6 +1,7 @@
 # smarthouse-1
 
 Домашнее Задание в ШРИ - «Адаптивная вёрстка» + TouchEvents + Typescript
+
 При переходе на вкладку "Видеонаблюдение" - домашнее задание по мультимедиа
 
 Production build - https://dfurzikova.github.io/smarthouse-1/
