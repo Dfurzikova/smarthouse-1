@@ -1,5 +1,4 @@
 "use strict";
-console.log('d');
 document.addEventListener('DOMContentLoaded', () => {
     const page = new Page();
     page.getDataEvents().then(() => {
